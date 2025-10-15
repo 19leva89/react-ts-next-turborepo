@@ -1,8 +1,8 @@
-import NextAuth from 'next-auth'
+import NextAuth, { type NextAuthResult } from 'next-auth'
 
 import authConfig from '@/auth.config'
 
-export const { auth, handlers, signIn, signOut } = NextAuth({
+const authResult = NextAuth({
 	secret: process.env.AUTH_SECRET,
 
 	session: {
@@ -17,3 +17,8 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
 
 	...authConfig,
 })
+
+export const auth: NextAuthResult['auth'] = authResult.auth
+export const handlers: NextAuthResult['handlers'] = authResult.handlers
+export const signIn: NextAuthResult['signIn'] = authResult.signIn
+export const signOut: NextAuthResult['signOut'] = authResult.signOut

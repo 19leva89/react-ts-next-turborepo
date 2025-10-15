@@ -6,7 +6,8 @@ import { constructMetadata } from '@/lib/utils'
 import { ThemeProvider } from '@/components/shared/providers'
 import { ClientLayout, Footer, Header } from '@/components/shared'
 
-import './globals.css'
+import '@repo/ui/globals.css'
+import '@/app/main.css'
 
 const nunito = Nunito({
 	subsets: ['cyrillic'],

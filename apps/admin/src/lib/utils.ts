@@ -9,7 +9,7 @@ export function absoluteUrl(path: string): string {
 	// Define the base URL
 	const baseUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
 		? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-		: `http://localhost:${process.env.PORT || 3001}`
+		: `http://localhost:${process.env.ADMIN_PORT || 3001}`
 
 	// Remove extra slashes to avoid format errors
 	return new URL(path, baseUrl).toString()

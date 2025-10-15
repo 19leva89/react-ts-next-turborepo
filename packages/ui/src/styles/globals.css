@@ -11,7 +11,17 @@ button {
 	cursor: pointer;
 }
 
+/* ********************************************** */
+/* ************************************* TAILWIND */
+/* ********************************************** */
+
 :root {
+	--main-site-color: #9500ff;
+	--dark-black: #000000;
+	--pure-white: #ffffff;
+	--week-white: #f6f3fc;
+	--dark-site-secondary: #19195c;
+	--main-hover-color: #905ff1;
 	--radius: 0.625rem;
 	--background: oklch(1 0 0);
 	--foreground: oklch(0.145 0 0);
