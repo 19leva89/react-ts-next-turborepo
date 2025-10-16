@@ -1,7 +1,7 @@
 import { cn } from '@repo/ui/lib'
 import type { Dispatch, SetStateAction } from 'react'
 import { Controller, useForm } from 'react-hook-form'
-import { GripVertical, Loader, Trash } from 'lucide-react'
+import { GripVerticalIcon, LoaderIcon, TrashIcon } from 'lucide-react'
 
 import { Checkbox } from '@/components/ui/checkbox'
 import { useDeleteTask } from '../../_hooks/useDeleteTask'
@@ -33,8 +33,7 @@ export const KanbanCard = ({ item, setItems }: IKanbanCard) => {
 	return (
 		<div
 			className={cn(
-				'border-border relative mt-5 rounded border bg-[#0e0f0f] p-4',
-				'animation-opacity group transition-all',
+				'border-border animation-opacity group relative mt-5 rounded border bg-[#0e0f0f] p-4 transition-all',
 				watch('isCompleted') && 'italic line-through opacity-50',
 			)}
 		>
@@ -43,7 +42,7 @@ export const KanbanCard = ({ item, setItems }: IKanbanCard) => {
 					aria-describedby='todo-item'
 					className='-ml-1 -mr-0.5 cursor-pointer opacity-20 transition-opacity duration-300 ease-in-out hover:opacity-100'
 				>
-					<GripVertical className='absolute right-1.5 top-2 size-4' />
+					<GripVerticalIcon className='absolute right-1.5 top-2 size-4' />
 				</button>
 
 				<Controller
@@ -85,7 +84,7 @@ export const KanbanCard = ({ item, setItems }: IKanbanCard) => {
 					onClick={() => (item.id ? deleteTask(item.id) : setItems((prev) => prev?.slice(0, -1)))}
 					className='cursor-pointer opacity-50 transition-opacity duration-300 ease-in-out hover:opacity-100'
 				>
-					{isDeletePending ? <Loader size={15} /> : <Trash size={15} />}
+					{isDeletePending ? <LoaderIcon size={15} /> : <TrashIcon size={15} />}
 				</button>
 			</div>
 		</div>

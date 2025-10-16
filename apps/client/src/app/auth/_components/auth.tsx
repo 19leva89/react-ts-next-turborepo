@@ -5,31 +5,36 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Button } from '@repo/ui/components'
 import { useMutation } from '@tanstack/react-query'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { FormProvider, Resolver, SubmitHandler, useForm } from 'react-hook-form'
 
-import { Field } from '@/components/ui/field/Field'
+import { FormInput } from '@/components/forms'
 import { Heading } from '@/components/ui/heading'
-
 import { authService } from '@/services/auth.service'
 import { DASHBOARD_PAGES } from '@/config/pages-url.config'
-import { AxiosServerError, IAuthForm, ServerError } from '@/types/auth.types'
+import { AxiosServerError, ServerError } from '@/types/auth.types'
+import { AuthSchema, TAuthValues } from '@/components/forms/schemas'
 
 export const Auth = () => {
-	const { push } = useRouter()
-	const { register, handleSubmit, reset } = useForm<IAuthForm>({
-		mode: 'onChange',
-	})
+	const router = useRouter()
 
 	const [isLoginForm, setIsLoginForm] = useState<boolean>(false)
 
+	const form = useForm<TAuthValues>({
+		resolver: zodResolver(AuthSchema) as Resolver<TAuthValues>,
+		defaultValues: {
+			email: '',
+			password: '',
+		},
+	})
+
 	const { mutate } = useMutation({
 		mutationKey: ['auth'],
-		mutationFn: (data: IAuthForm) => authService.main(isLoginForm ? 'login' : 'register', data),
+		mutationFn: (data: TAuthValues) => authService.main(isLoginForm ? 'login' : 'register', data),
 		onSuccess() {
 			toast.success('Successfully login!')
 
-			reset()
-			push(DASHBOARD_PAGES.HOME)
+			router.push(DASHBOARD_PAGES.HOME)
 		},
 		onError(error: unknown) {
 			const axiosError = error as AxiosServerError
@@ -64,46 +69,32 @@ export const Auth = () => {
 		},
 	})
 
-	const onSubmit: SubmitHandler<IAuthForm> = (data) => {
+	const onSubmit: SubmitHandler<TAuthValues> = (data) => {
 		mutate(data)
 	}
 
 	return (
 		<div className='flex min-h-screen items-center justify-center'>
-			<form
-				onSubmit={handleSubmit(onSubmit)}
-				className='bg-sidebar m-2 w-full rounded-xl p-4 shadow-sm sm:w-2/3 md:w-1/2 lg:w-1/3 xl:w-1/4'
-			>
-				<Heading title='Auth' />
+			<FormProvider {...form}>
+				<form
+					onSubmit={form.handleSubmit(onSubmit)}
+					className='bg-sidebar m-2 w-full rounded-xl p-4 shadow-sm sm:w-2/3 md:w-1/2 lg:w-1/3 xl:w-1/4'
+				>
+					<div className='flex grow flex-col items-stretch justify-between gap-2 py-3 md:gap-4 md:py-6'>
+						<Heading title='Auth' />
 
-				<Field
-					id='email'
-					label='Email:'
-					placeholder='Enter email:'
-					type='email'
-					extra='mb-4'
-					{...register('email', {
-						required: 'Email is required!',
-					})}
-				/>
+						<FormInput name='email' type='email' placeholder='Email' required />
 
-				<Field
-					id='password'
-					label='Password: '
-					placeholder='Enter password: '
-					type='password'
-					{...register('password', {
-						required: 'Password is required!',
-					})}
-					extra='mb-6'
-				/>
+						<FormInput name='password' type='password' placeholder='Password' required />
 
-				<div className='flex items-center justify-center gap-5'>
-					<Button onClick={() => setIsLoginForm(true)}>Login</Button>
+						<div className='mt-4 flex items-center justify-center gap-5'>
+							<Button onClick={() => setIsLoginForm(true)}>Login</Button>
 
-					<Button onClick={() => setIsLoginForm(false)}>Register</Button>
-				</div>
-			</form>
+							<Button onClick={() => setIsLoginForm(false)}>Register</Button>
+						</div>
+					</div>
+				</form>
+			</FormProvider>
 		</div>
 	)
 }

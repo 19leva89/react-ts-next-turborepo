@@ -1,7 +1,7 @@
 'use client'
 
 import { Button } from '@repo/ui/components'
-import { Loader, Pause, Play, RefreshCcw } from 'lucide-react'
+import { LoaderIcon, PauseIcon, PlayIcon, RefreshCcwIcon } from 'lucide-react'
 
 import { formatTime } from './format-time'
 import { useTimer } from '../_hooks/use-timer'
@@ -28,7 +28,7 @@ export const Pomodoro = () => {
 			{!isLoading && <div className='text-7xl font-semibold'>{formatTime(timerState.secondsLeft)}</div>}
 
 			{isLoading ? (
-				<Loader />
+				<LoaderIcon />
 			) : sessionsResponse?.data ? (
 				<>
 					<PomodoroRounds
@@ -43,7 +43,7 @@ export const Pomodoro = () => {
 						onClick={timerState.isRunning ? actions.pauseHandler : actions.playHandler}
 						className='mt-6 cursor-pointer opacity-80 transition-opacity duration-300 ease-in-out hover:opacity-100'
 					>
-						{timerState.isRunning ? <Pause size={30} /> : <Play size={30} />}
+						{timerState.isRunning ? <PauseIcon size={30} /> : <PlayIcon size={30} />}
 					</button>
 
 					<button
@@ -54,7 +54,7 @@ export const Pomodoro = () => {
 						}}
 						className='absolute right-0 top-0 cursor-pointer opacity-40 transition-opacity duration-300 ease-in-out hover:opacity-90'
 					>
-						<RefreshCcw size={19} />
+						<RefreshCcwIcon size={19} />
 					</button>
 				</>
 			) : (

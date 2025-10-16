@@ -1,7 +1,7 @@
 import { cn } from '@repo/ui/lib'
 import type { Dispatch, SetStateAction } from 'react'
 import { Controller, useForm } from 'react-hook-form'
-import { GripVertical, Loader, Trash } from 'lucide-react'
+import { GripVerticalIcon, LoaderIcon, TrashIcon } from 'lucide-react'
 
 import { Checkbox } from '@/components/ui/checkbox'
 import { useDeleteTask } from '../../_hooks/useDeleteTask'
@@ -43,7 +43,7 @@ export const ListRow = ({ item, setItems }: IListRow) => {
 					aria-describedby='todo-item'
 					className='cursor-pointer opacity-50 transition-opacity duration-300 ease-in-out hover:opacity-100'
 				>
-					<GripVertical />
+					<GripVerticalIcon />
 				</button>
 
 				<Controller
@@ -84,7 +84,7 @@ export const ListRow = ({ item, setItems }: IListRow) => {
 				onClick={() => (item.id ? deleteTask(item.id) : setItems((prev) => prev?.slice(0, -1)))}
 				className='flex cursor-pointer items-center justify-center opacity-50 transition-opacity duration-300 ease-in-out hover:opacity-100'
 			>
-				{isDeletePending ? <Loader size={15} /> : <Trash size={15} />}
+				{isDeletePending ? <LoaderIcon size={15} /> : <TrashIcon size={15} />}
 			</button>
 		</div>
 	)

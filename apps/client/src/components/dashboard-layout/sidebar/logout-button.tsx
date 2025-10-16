@@ -1,6 +1,6 @@
 'use client'
 
-import { LogOut } from 'lucide-react'
+import { LogOutIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useMutation } from '@tanstack/react-query'
 
@@ -21,7 +21,7 @@ export const LogoutButton = () => {
 				onClick={() => mutate()}
 				className='cursor-pointer opacity-20 transition-opacity duration-300 ease-in-out hover:opacity-100'
 			>
-				<LogOut size={20} />
+				<LogOutIcon size={20} />
 			</button>
 		</div>
 	)

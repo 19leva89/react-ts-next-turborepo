@@ -184,3 +184,24 @@ button {
 		opacity: 1;
 	}
 }
+
+/* for fix Shadcn Input autofill background color */
+/* @supports selector(:has(*)) */
+@supports selector(:has(*)) {
+	[data-slot='input-group']:has(> [data-slot='input-group-control']:-webkit-autofill) {
+		background-color: #e8f0fe;
+	}
+
+	.dark [data-slot='input-group']:has(> [data-slot='input-group-control']:-webkit-autofill) {
+		background-color: #1d2940;
+	}
+}
+
+/* Fallback for browsers without :has() */
+[data-slot='input-group'] [data-slot='input-group-control']:-webkit-autofill {
+	box-shadow: 0 0 0 1000px #e8f0fe inset !important;
+}
+
+.dark [data-slot='input-group'] [data-slot='input-group-control']:-webkit-autofill {
+	box-shadow: 0 0 0 1000px #1d2940 inset !important;
+}

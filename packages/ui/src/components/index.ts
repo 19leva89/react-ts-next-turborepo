@@ -15,10 +15,14 @@ export { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext
 export { ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent } from './chart'
 export type { ChartConfig } from './chart'
 export { Checkbox } from './checkbox'
+export { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from './command'
 export {
 	Dialog,
+	DialogClose,
 	DialogContent,
 	DialogDescription,
+	DialogFooter,
+	DialogHeader,
 	DialogOverlay,
 	DialogPortal,
 	DialogTitle,
@@ -33,6 +37,18 @@ export {
 	DropdownMenuLabel,
 	DropdownMenuTrigger,
 } from './dropdown-menu'
+export {
+	Field,
+	FieldLabel,
+	FieldDescription,
+	FieldError,
+	FieldGroup,
+	FieldLegend,
+	FieldSeparator,
+	FieldSet,
+	FieldContent,
+	FieldTitle,
+} from './field'
 export { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from './form'
 export { HoverCard, HoverCardTrigger, HoverCardContent } from './hover-card'
 export {
@@ -81,6 +97,7 @@ export {
 } from './sidebar'
 export { Skeleton } from './skeleton'
 export { Spinner } from './spinner'
+export { Switch } from './switch'
 export { Table, TableHeader, TableBody, TableFooter, TableHead, TableRow, TableCell } from './table'
 export { Textarea } from './textarea'
 export { Toaster } from './sonner'

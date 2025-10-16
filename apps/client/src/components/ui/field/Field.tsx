@@ -15,8 +15,8 @@ interface InputFieldProps {
 export const Field = forwardRef<HTMLInputElement, InputFieldProps>(
 	({ label, id, extra, type, placeholder, state, disabled, isNumber, ...rest }, ref) => {
 		return (
-			<div className={`${extra}`}>
-				<label htmlFor={id} className={`ml-1.5 text-sm font-medium text-black/80 dark:text-white`}>
+			<div className={extra}>
+				<label htmlFor={id} className='ml-1.5 text-sm font-medium text-black/80 dark:text-white'>
 					{label}
 				</label>
 

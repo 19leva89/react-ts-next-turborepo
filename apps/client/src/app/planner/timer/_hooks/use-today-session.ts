@@ -1,9 +1,9 @@
-import { useQuery } from '@tanstack/react-query'
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from 'react'
-
-import type { ITimerState } from '../_components/timer.types'
+import { useQuery } from '@tanstack/react-query'
 
 import { useLoadSettings } from './use-load-settings'
+import type { ITimerState } from '../_components/timer.types'
 import { pomodoroService } from '@/services/pomodoro.service'
 
 export function useTodaySession({ setActiveRound, setSecondsLeft }: ITimerState) {

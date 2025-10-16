@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { SquareChartGantt } from 'lucide-react'
+import { SquareChartGanttIcon } from 'lucide-react'
 
 import { MENU } from './menu.data'
 import { MenuItem } from './menu-item'
@@ -13,7 +13,7 @@ export const Sidebar = () => {
 		<aside className='border-r-border bg-sidebar flex h-full flex-col justify-between border-r'>
 			<div>
 				<Link href='/' className='border-b-border flex items-center gap-2.5 border-b'>
-					<SquareChartGantt color={COLORS.primary} size={38} />
+					<SquareChartGanttIcon color={COLORS.primary} size={38} />
 
 					<span className='relative text-2xl font-bold'>
 						Planner

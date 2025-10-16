@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react'
 
-import type { IPomodoroRoundResponse } from '@/types/pomodoro.types'
-
-import type { ITimerState } from '../_components/timer.types'
-
 import { useLoadSettings } from './use-load-settings'
+import type { ITimerState } from '../_components/timer.types'
+import type { IPomodoroRoundResponse } from '@/types/pomodoro.types'
 
 export function useTimer(): ITimerState {
 	const { breakInterval, workInterval } = useLoadSettings()

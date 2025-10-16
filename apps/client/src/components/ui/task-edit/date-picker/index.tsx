@@ -1,7 +1,7 @@
-import { cn } from '@repo/ui/lib'
 import dayjs from 'dayjs'
-import { X } from 'lucide-react'
 import { useState } from 'react'
+import { cn } from '@repo/ui/lib'
+import { XIcon } from 'lucide-react'
 import { DayPicker } from 'react-day-picker'
 import LocalizedFormat from 'dayjs/plugin/localizedFormat'
 
@@ -44,7 +44,7 @@ export function DatePicker({ onChange, value, position = 'right' }: IDatePicker)
 					onClick={() => onChange('')}
 					className='absolute -right-4 -top-2 cursor-pointer opacity-30 transition-opacity duration-300 ease-in-out hover:opacity-100'
 				>
-					<X size={14} />
+					<XIcon size={14} />
 				</button>
 			)}
 

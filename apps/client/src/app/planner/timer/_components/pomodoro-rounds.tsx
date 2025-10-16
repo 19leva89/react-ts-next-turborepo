@@ -1,5 +1,5 @@
 import { cn } from '@repo/ui/lib'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
 
 import { IPomodoroRoundResponse } from '@/types/pomodoro.types'
 
@@ -26,7 +26,7 @@ export const PomodoroRounds = ({
 				onClick={() => (isCanPrevRound ? prevRoundHandler() : false)}
 				className='mt-1 cursor-pointer opacity-20 transition-opacity duration-300 ease-in-out hover:opacity-100 disabled:opacity-20'
 			>
-				<ChevronLeft size={23} />
+				<ChevronLeftIcon size={23} />
 			</button>
 
 			<div className='mt-1 flex items-center justify-center gap-3'>
@@ -51,7 +51,7 @@ export const PomodoroRounds = ({
 				onClick={() => (isCanNextRound ? nextRoundHandler() : false)}
 				className='mt-1 cursor-pointer opacity-20 transition-opacity duration-300 ease-in-out hover:opacity-100 disabled:opacity-20'
 			>
-				<ChevronRight size={23} />
+				<ChevronRightIcon size={23} />
 			</button>
 		</div>
 	)

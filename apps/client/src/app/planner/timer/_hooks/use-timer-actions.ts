@@ -1,9 +1,8 @@
 import type { IPomodoroRoundResponse } from '@/types/pomodoro.types'
 
-import type { ITimerState } from '../_components/timer.types'
-
-import { useLoadSettings } from './use-load-settings'
 import { useUpdateRound } from './use-update-round'
+import { useLoadSettings } from './use-load-settings'
+import type { ITimerState } from '../_components/timer.types'
 
 type TypeUseTimerActions = ITimerState & {
 	rounds: IPomodoroRoundResponse[] | undefined

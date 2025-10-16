@@ -1,5 +1,5 @@
 import { useFormContext } from 'react-hook-form'
-import { Edit, GripVertical, Loader, Trash } from 'lucide-react'
+import { EditIcon, GripVerticalIcon, LoaderIcon, TrashIcon } from 'lucide-react'
 
 import { useDeleteTimeBlock } from '../_hooks/use-delete-time-block'
 import { useTimeBlockSortable } from '../_hooks/use-time-block-sortable'
@@ -26,7 +26,7 @@ export const TimeBlock = ({ item }: { item: ITimeBlockResponse }) => {
 						aria-describedby='time-block'
 						className='cursor-pointer opacity-100 transition-opacity duration-300 ease-in-out hover:opacity-50'
 					>
-						<GripVertical className='size-4' />
+						<GripVerticalIcon className='size-4' />
 					</button>
 
 					<div>
@@ -47,14 +47,14 @@ export const TimeBlock = ({ item }: { item: ITimeBlockResponse }) => {
 						}}
 						className='mr-2 cursor-pointer opacity-50 transition-opacity duration-300 ease-in-out hover:opacity-100'
 					>
-						<Edit size={16} />
+						<EditIcon size={16} />
 					</button>
 
 					<button
 						onClick={() => deleteTimeBlock()}
 						className='cursor-pointer opacity-50 transition-opacity duration-300 ease-in-out hover:opacity-100'
 					>
-						{isDeletePending ? <Loader size={16} /> : <Trash size={16} />}
+						{isDeletePending ? <LoaderIcon size={16} /> : <TrashIcon size={16} />}
 					</button>
 				</div>
 			</div>

@@ -1,23 +1,34 @@
 'use client'
 
-import { SubmitHandler, useForm } from 'react-hook-form'
-
+import { useEffect } from 'react'
 import { Button } from '@repo/ui/components'
-import { TypeUserForm } from '@/types/auth.types'
-import { Field } from '@/components/ui/field/Field'
-import { useInitialData } from '../_hooks/use-initial-data'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { FormProvider, Resolver, SubmitHandler, useForm } from 'react-hook-form'
+
+import { FormInput } from '@/components/forms'
+import { useProfile } from '@/hooks/use-profile'
 import { useUpdateSettings } from '../_hooks/use-update-settings'
+import { TUserValues, UserSchema } from '@/components/forms/schemas'
 
 export const Settings = () => {
-	const { register, handleSubmit, reset } = useForm<TypeUserForm>({
-		mode: 'onChange',
-	})
-
-	useInitialData(reset)
+	const { data } = useProfile()
+	console.log(data?.user)
 
 	const { isPending, mutate } = useUpdateSettings()
 
-	const onSubmit: SubmitHandler<TypeUserForm> = (data) => {
+	const form = useForm<TUserValues>({
+		resolver: zodResolver(UserSchema) as Resolver<TUserValues>,
+		defaultValues: {
+			email: '',
+			name: '',
+			password: '',
+			workInterval: 5,
+			breakInterval: 5,
+			intervalsCount: 1,
+		},
+	})
+
+	const onSubmit: SubmitHandler<TUserValues> = (data) => {
 		const { password, ...rest } = data
 
 		mutate({
@@ -26,66 +37,54 @@ export const Settings = () => {
 		})
 	}
 
+	useEffect(() => {
+		if (data?.user) {
+			form.reset({
+				email: data.user.email,
+				name: data.user.name,
+				password: '',
+				workInterval: data.user.workInterval,
+				breakInterval: data.user.breakInterval,
+				intervalsCount: data.user.intervalsCount,
+			})
+		}
+	}, [data, form])
+
 	return (
-		<div>
-			<form className='w-2/4' onSubmit={handleSubmit(onSubmit)}>
+		<FormProvider {...form}>
+			<form className='m-6 flex w-2/4 flex-col gap-4' onSubmit={form.handleSubmit(onSubmit)}>
 				<div className='grid grid-cols-2 gap-10'>
-					<div>
-						<Field
-							id='email'
-							label='Email: '
-							placeholder='Enter email: '
-							type='email'
-							{...register('email', {
-								required: 'Email is required!',
-							})}
-							extra='mb-4'
-						/>
+					<div className='flex flex-col gap-4'>
+						<FormInput name='email' type='email' label='Enter email' placeholder='test@email.com' required />
 
-						<Field id='name' label='Name: ' placeholder='Enter name: ' {...register('name')} extra='mb-4' />
+						<FormInput name='name' type='text' label='Enter name' placeholder='John Doe' />
 
-						<Field
-							id='password'
-							label='Password: '
-							placeholder='Enter password: '
-							type='password'
-							{...register('password')}
-							extra='mb-10'
-						/>
+						<FormInput name='password' type='password' label='Enter password' placeholder='Password' />
 					</div>
 
-					<div>
-						<Field
-							id='workInterval'
-							label='Work interval (min.): '
-							placeholder='Enter work interval (min.): '
-							isNumber
-							{...register('workInterval', {
-								valueAsNumber: true,
-							})}
-							extra='mb-4'
+					<div className='flex flex-col gap-4'>
+						<FormInput
+							name='workInterval'
+							type='number'
+							label='Enter work interval (min.)'
+							placeholder='30'
+							required
 						/>
 
-						<Field
-							id='breakInterval'
-							label='Break interval (min.): '
-							placeholder='Enter break interval (min.): '
-							isNumber
-							{...register('breakInterval', {
-								valueAsNumber: true,
-							})}
-							extra='mb-4'
+						<FormInput
+							name='breakInterval'
+							type='number'
+							label='Enter break interval (min.)'
+							placeholder='5'
+							required
 						/>
 
-						<Field
-							id='intervalsCount'
-							label='Intervals count (max 10): '
-							placeholder='Enter intervals count (max 10): '
-							isNumber
-							{...register('intervalsCount', {
-								valueAsNumber: true,
-							})}
-							extra='mb-6'
+						<FormInput
+							name='intervalsCount'
+							type='number'
+							label='Enter intervals count (max 10)'
+							placeholder='5'
+							required
 						/>
 					</div>
 				</div>
@@ -94,6 +93,6 @@ export const Settings = () => {
 					Save
 				</Button>
 			</form>
-		</div>
+		</FormProvider>
 	)
 }
