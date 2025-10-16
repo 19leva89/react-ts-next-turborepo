@@ -17,24 +17,24 @@ export const TimeBlock = ({ item }: { item: ITimeBlockResponse }) => {
 					backgroundColor: item.color || 'lightslategray',
 					height: `${item.duration}px`,
 				}}
-				className="rounded mb-3 p-4 relative flex items-center justify-between text-sm transition-opacity"
+				className='relative mb-3 flex items-center justify-between rounded p-4 text-sm transition-opacity'
 			>
-				<div className="flex items-center">
+				<div className='flex items-center'>
 					<button
 						{...attributes}
 						{...listeners}
-						aria-describedby="time-block"
-						className="cursor-pointer opacity-100 transition-opacity hover:opacity-50 ease-in-out duration-300"
+						aria-describedby='time-block'
+						className='cursor-pointer opacity-100 transition-opacity duration-300 ease-in-out hover:opacity-50'
 					>
-						<GripVertical className="h-4 w-4" />
+						<GripVertical className='size-4' />
 					</button>
 
 					<div>
-						{item.name} <i className="text-xs opacity-50">({item.duration} min.)</i>
+						{item.name} <i className='text-xs opacity-50'>({item.duration} min.)</i>
 					</div>
 				</div>
 
-				<div className="flex items-center gap-2">
+				<div className='flex items-center gap-2'>
 					<button
 						onClick={() => {
 							reset({
@@ -45,14 +45,14 @@ export const TimeBlock = ({ item }: { item: ITimeBlockResponse }) => {
 								order: item.order,
 							})
 						}}
-						className="mr-2 cursor-pointer opacity-50 transition-opacity hover:opacity-100 ease-in-out duration-300"
+						className='mr-2 cursor-pointer opacity-50 transition-opacity duration-300 ease-in-out hover:opacity-100'
 					>
 						<Edit size={16} />
 					</button>
 
 					<button
 						onClick={() => deleteTimeBlock()}
-						className="cursor-pointer opacity-50 transition-opacity hover:opacity-100 ease-in-out duration-300"
+						className='cursor-pointer opacity-50 transition-opacity duration-300 ease-in-out hover:opacity-100'
 					>
 						{isDeletePending ? <Loader size={16} /> : <Trash size={16} />}
 					</button>

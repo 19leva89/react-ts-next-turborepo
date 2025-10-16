@@ -8,7 +8,7 @@ import {
 	Post,
 	Put,
 	UsePipes,
-	ValidationPipe
+	ValidationPipe,
 } from '@nestjs/common'
 
 import { TimeBlockDto } from './dto/time-block.dto'
@@ -21,14 +21,14 @@ import { CurrentUser } from 'src/modules/auth/decorators/user.decorator'
 export class TimeBlockController {
 	constructor(private readonly timeBlockService: TimeBlockService) {}
 
-	// http://localhost:4000/api/user/time-blocks
+	// http://localhost:8000/api/user/time-blocks
 	@Get()
 	@Auth()
 	async getAll(@CurrentUser('id') userId: string) {
 		return this.timeBlockService.getAll(userId)
 	}
 
-	// http://localhost:4000/api/user/time-blocks
+	// http://localhost:8000/api/user/time-blocks
 	@UsePipes(new ValidationPipe())
 	@HttpCode(200)
 	@Post()
@@ -37,7 +37,7 @@ export class TimeBlockController {
 		return this.timeBlockService.create(dto, userId)
 	}
 
-	// http://localhost:4000/api/user/time-blocks/update-order
+	// http://localhost:8000/api/user/time-blocks/update-order
 	@UsePipes(new ValidationPipe())
 	@HttpCode(200)
 	@Put('update-order')
@@ -46,20 +46,16 @@ export class TimeBlockController {
 		return this.timeBlockService.updateOrder(updateOrderDto.ids)
 	}
 
-	// http://localhost:4000/api/user/time-blocks/:id
+	// http://localhost:8000/api/user/time-blocks/:id
 	@UsePipes(new ValidationPipe())
 	@HttpCode(200)
 	@Put(':id')
 	@Auth()
-	async update(
-		@Body() dto: TimeBlockDto,
-		@CurrentUser('id') userId: string,
-		@Param('id') id: string
-	) {
+	async update(@Body() dto: TimeBlockDto, @CurrentUser('id') userId: string, @Param('id') id: string) {
 		return this.timeBlockService.update(dto, id, userId)
 	}
 
-	// http://localhost:4000/api/user/time-blocks/:id
+	// http://localhost:8000/api/user/time-blocks/:id
 	@HttpCode(200)
 	@Delete(':id')
 	@Auth()

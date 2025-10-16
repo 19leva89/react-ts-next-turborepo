@@ -43,7 +43,7 @@ export const KanbanCard = ({ item, setItems }: IKanbanCard) => {
 					aria-describedby='todo-item'
 					className='-ml-1 -mr-0.5 cursor-pointer opacity-20 transition-opacity duration-300 ease-in-out hover:opacity-100'
 				>
-					<GripVertical className='absolute right-1.5 top-2 h-4 w-4' />
+					<GripVertical className='absolute right-1.5 top-2 size-4' />
 				</button>
 
 				<Controller

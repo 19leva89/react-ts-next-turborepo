@@ -8,7 +8,7 @@ import {
 	Post,
 	Put,
 	UsePipes,
-	ValidationPipe
+	ValidationPipe,
 } from '@nestjs/common'
 
 import { PomodoroService } from './pomodoro.service'
@@ -20,14 +20,14 @@ import { CurrentUser } from 'src/modules/auth/decorators/user.decorator'
 export class PomodoroController {
 	constructor(private readonly pomodoroService: PomodoroService) {}
 
-	// http://localhost:4000/api/user/timer/today
+	// http://localhost:8000/api/user/timer/today
 	@Get('today')
 	@Auth()
 	async getTodaySession(@CurrentUser('id') userId: string) {
 		return this.pomodoroService.getTodaySession(userId)
 	}
 
-	// http://localhost:4000/api/user/timer
+	// http://localhost:8000/api/user/timer
 	@HttpCode(200)
 	@Post()
 	@Auth()
@@ -35,7 +35,7 @@ export class PomodoroController {
 		return this.pomodoroService.create(userId)
 	}
 
-	// http://localhost:4000/api/user/timer/round/:id
+	// http://localhost:8000/api/user/timer/round/:id
 	@UsePipes(new ValidationPipe())
 	@HttpCode(200)
 	@Put('/round/:id')
@@ -44,27 +44,20 @@ export class PomodoroController {
 		return this.pomodoroService.updateRound(dto, id)
 	}
 
-	// http://localhost:4000/api/user/timer/:id
+	// http://localhost:8000/api/user/timer/:id
 	@UsePipes(new ValidationPipe())
 	@HttpCode(200)
 	@Put(':id')
 	@Auth()
-	async update(
-		@Body() dto: PomodoroSessionDto,
-		@CurrentUser('id') userId: string,
-		@Param('id') id: string
-	) {
+	async update(@Body() dto: PomodoroSessionDto, @CurrentUser('id') userId: string, @Param('id') id: string) {
 		return this.pomodoroService.update(dto, id, userId)
 	}
 
-	// http://localhost:4000/api/user/timer/:id
+	// http://localhost:8000/api/user/timer/:id
 	@HttpCode(200)
 	@Delete(':id')
 	@Auth()
-	async deleteSession(
-		@Param('id') id: string,
-		@CurrentUser('id') userId: string
-	) {
+	async deleteSession(@Param('id') id: string, @CurrentUser('id') userId: string) {
 		return this.pomodoroService.deleteSession(id, userId)
 	}
 }

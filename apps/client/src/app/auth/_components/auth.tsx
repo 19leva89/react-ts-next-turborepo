@@ -3,10 +3,10 @@
 import { toast } from 'sonner'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { Button } from '@repo/ui/components'
 import { useMutation } from '@tanstack/react-query'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Button } from '@/components/ui/button'
 import { Field } from '@/components/ui/field/Field'
 import { Heading } from '@/components/ui/heading'
 
@@ -27,6 +27,7 @@ export const Auth = () => {
 		mutationFn: (data: IAuthForm) => authService.main(isLoginForm ? 'login' : 'register', data),
 		onSuccess() {
 			toast.success('Successfully login!')
+
 			reset()
 			push(DASHBOARD_PAGES.HOME)
 		},
@@ -70,8 +71,8 @@ export const Auth = () => {
 	return (
 		<div className='flex min-h-screen items-center justify-center'>
 			<form
-				className='bg-sidebar p-layout m-2 w-full rounded-xl shadow-sm sm:w-2/3 md:w-1/2 lg:w-1/3 xl:w-1/4'
 				onSubmit={handleSubmit(onSubmit)}
+				className='bg-sidebar m-2 w-full rounded-xl p-4 shadow-sm sm:w-2/3 md:w-1/2 lg:w-1/3 xl:w-1/4'
 			>
 				<Heading title='Auth' />
 

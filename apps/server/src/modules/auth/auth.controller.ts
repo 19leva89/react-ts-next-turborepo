@@ -7,7 +7,7 @@ import {
 	Res,
 	UnauthorizedException,
 	UsePipes,
-	ValidationPipe
+	ValidationPipe,
 } from '@nestjs/common'
 import { Request, Response } from 'express'
 import { AuthService } from './auth.service'
@@ -17,7 +17,7 @@ import { AuthDto } from './dto/auth.dto'
 export class AuthController {
 	constructor(private readonly authService: AuthService) {}
 
-	// http://localhost:4000/api/auth/login
+	// http://localhost:8000/api/auth/login
 	@UsePipes(new ValidationPipe())
 	@HttpCode(200)
 	@Post('login')
@@ -28,31 +28,24 @@ export class AuthController {
 		return response
 	}
 
-	// http://localhost:4000/api/auth/register
+	// http://localhost:8000/api/auth/register
 	@UsePipes(new ValidationPipe())
 	@HttpCode(200)
 	@Post('register')
-	async register(
-		@Body() dto: AuthDto,
-		@Res({ passthrough: true }) res: Response
-	) {
+	async register(@Body() dto: AuthDto, @Res({ passthrough: true }) res: Response) {
 		const { refreshToken, ...response } = await this.authService.register(dto)
 		this.authService.addRefreshTokenToResponse(res, refreshToken)
 
 		return response
 	}
 
-	// http://localhost:4000/api/auth/login/access-token
+	// http://localhost:8000/api/auth/login/access-token
 	@HttpCode(200)
 	@Post('login/access-token')
-	async getNewTokens(
-		@Req() req: Request,
-		@Res({ passthrough: true }) res: Response
-	) {
+	async getNewTokens(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
 		console.log('Cookies:', req.cookies)
 
-		const refreshTokenFromCookies =
-			req.cookies[this.authService.REFRESH_TOKEN_NAME]
+		const refreshTokenFromCookies = req.cookies[this.authService.REFRESH_TOKEN_NAME]
 
 		console.log('Refresh token from cookies:', refreshTokenFromCookies)
 
@@ -61,16 +54,14 @@ export class AuthController {
 			throw new UnauthorizedException('Refresh token not passed')
 		}
 
-		const { refreshToken, ...response } = await this.authService.getNewTokens(
-			refreshTokenFromCookies
-		)
+		const { refreshToken, ...response } = await this.authService.getNewTokens(refreshTokenFromCookies)
 
 		this.authService.addRefreshTokenToResponse(res, refreshToken)
 
 		return response
 	}
 
-	// http://localhost:4000/api/auth/logout
+	// http://localhost:8000/api/auth/logout
 	@HttpCode(200)
 	@Post('logout')
 	async logout(@Res({ passthrough: true }) res: Response) {

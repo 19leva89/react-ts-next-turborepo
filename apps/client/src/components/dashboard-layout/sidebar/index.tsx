@@ -12,7 +12,7 @@ export const Sidebar = () => {
 	return (
 		<aside className='border-r-border bg-sidebar flex h-full flex-col justify-between border-r'>
 			<div>
-				<Link href='/' className='p-layout border-b-border flex items-center gap-2.5 border-b'>
+				<Link href='/' className='border-b-border flex items-center gap-2.5 border-b'>
 					<SquareChartGantt color={COLORS.primary} size={38} />
 
 					<span className='relative text-2xl font-bold'>
@@ -32,7 +32,7 @@ export const Sidebar = () => {
 				</div>
 			</div>
 
-			<footer className='p-layout text-center text-xs font-normal opacity-40'>
+			<footer className='text-center text-xs font-normal opacity-40'>
 				2025 &copy; With love from{' '}
 				<a
 					href='https://www.linkedin.com/in/lev-dmitry'

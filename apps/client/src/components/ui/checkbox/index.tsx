@@ -23,7 +23,7 @@ export function Checkbox(props: {
 		<input
 			id={id}
 			type='checkbox'
-			className={`defaultCheckbox outline-hidden relative inline-flex h-[20px] min-h-[20px] w-[20px] min-w-[20px] appearance-none
+			className={`defaultCheckbox outline-hidden relative inline-flex size-5 min-h-5 min-w-5 appearance-none
       items-center justify-center rounded-md border border-gray-300 text-white/0 transition ease-linear
       checked:border-none checked:text-white hover:cursor-pointer dark:border-white/10 ${
 				color === 'red'

@@ -1,16 +1,15 @@
 'use client'
 
+import { Button } from '@repo/ui/components'
 import { Loader, Pause, Play, RefreshCcw } from 'lucide-react'
-
-import { Button } from '@/components/ui/button'
 
 import { formatTime } from './format-time'
 import { useTimer } from '../_hooks/use-timer'
 import { PomodoroRounds } from './pomodoro-rounds'
-import { useCreateSession } from '../_hooks/use-create-session'
-import { useDeleteSession } from '../_hooks/use-delete-session'
 import { useTimerActions } from '../_hooks/use-timer-actions'
 import { useTodaySession } from '../_hooks/use-today-session'
+import { useCreateSession } from '../_hooks/use-create-session'
+import { useDeleteSession } from '../_hooks/use-delete-session'
 
 export const Pomodoro = () => {
 	const timerState = useTimer()
@@ -25,8 +24,9 @@ export const Pomodoro = () => {
 	)
 
 	return (
-		<div className="relative w-80 text-center">
-			{!isLoading && <div className="text-7xl font-semibold">{formatTime(timerState.secondsLeft)}</div>}
+		<div className='relative w-80 text-center'>
+			{!isLoading && <div className='text-7xl font-semibold'>{formatTime(timerState.secondsLeft)}</div>}
+
 			{isLoading ? (
 				<Loader />
 			) : sessionsResponse?.data ? (
@@ -41,7 +41,7 @@ export const Pomodoro = () => {
 					<button
 						disabled={actions.isUpdateRoundPending}
 						onClick={timerState.isRunning ? actions.pauseHandler : actions.playHandler}
-						className="mt-6 cursor-pointer opacity-80 hover:opacity-100 transition-opacity ease-in-out duration-300"
+						className='mt-6 cursor-pointer opacity-80 transition-opacity duration-300 ease-in-out hover:opacity-100'
 					>
 						{timerState.isRunning ? <Pause size={30} /> : <Play size={30} />}
 					</button>
@@ -52,13 +52,13 @@ export const Pomodoro = () => {
 							timerState.setIsRunning(false)
 							deleteSession(sessionsResponse.data.id)
 						}}
-						className="absolute top-0 right-0 cursor-pointer opacity-40 hover:opacity-90 transition-opacity ease-in-out duration-300"
+						className='absolute right-0 top-0 cursor-pointer opacity-40 transition-opacity duration-300 ease-in-out hover:opacity-90'
 					>
 						<RefreshCcw size={19} />
 					</button>
 				</>
 			) : (
-				<Button onClick={() => mutate()} className="mt-1" disabled={isPending}>
+				<Button onClick={() => mutate()} className='mt-1' disabled={isPending}>
 					Create session
 				</Button>
 			)}

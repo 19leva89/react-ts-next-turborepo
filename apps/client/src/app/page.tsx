@@ -1,13 +1,15 @@
 import Link from 'next/link'
 
-import { Button } from '@/components/ui/button'
+import { Button, Separator } from '@repo/ui/components'
 
 const HomePage = () => {
 	return (
-		<div className='p-layout border-b-border flex items-center gap-2.5 border-b'>
-			<Button>
+		<div className='mx-auto my-2 flex flex-col items-start gap-2'>
+			<Button variant='default' className='mx-2'>
 				<Link href='/planner'>Planner</Link>
 			</Button>
+
+			<Separator />
 		</div>
 	)
 }

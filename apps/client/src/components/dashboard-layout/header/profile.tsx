@@ -7,7 +7,7 @@ export const Profile = () => {
 	const { data, isLoading } = useProfile()
 
 	return (
-		<div className='top-big-layout right-big-layout absolute'>
+		<div>
 			{isLoading ? (
 				<Loader />
 			) : (
@@ -18,7 +18,7 @@ export const Profile = () => {
 						<p className='text-sm opacity-40'>{data?.user.email}</p>
 					</div>
 
-					<div className='flex h-10 w-10 items-center justify-center rounded-sm bg-white/20 text-2xl uppercase text-white'>
+					<div className='flex size-10 items-center justify-center rounded-sm bg-white/20 text-2xl uppercase text-white'>
 						{data?.user.name?.charAt(0) || 'A'}
 					</div>
 				</div>

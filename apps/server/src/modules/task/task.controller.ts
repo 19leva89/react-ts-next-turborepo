@@ -8,7 +8,7 @@ import {
 	Post,
 	Put,
 	UsePipes,
-	ValidationPipe
+	ValidationPipe,
 } from '@nestjs/common'
 
 import { TaskDto } from './task.dto'
@@ -20,14 +20,14 @@ import { CurrentUser } from 'src/modules/auth/decorators/user.decorator'
 export class TaskController {
 	constructor(private readonly taskService: TaskService) {}
 
-	// http://localhost:4000/api/user/tasks
+	// http://localhost:8000/api/user/tasks
 	@Get()
 	@Auth()
 	async getAll(@CurrentUser('id') userId: string) {
 		return this.taskService.getAll(userId)
 	}
 
-	// http://localhost:4000/api/user/tasks
+	// http://localhost:8000/api/user/tasks
 	@UsePipes(new ValidationPipe())
 	@HttpCode(200)
 	@Post()
@@ -36,20 +36,16 @@ export class TaskController {
 		return this.taskService.create(dto, userId)
 	}
 
-	// http://localhost:4000/api/user/tasks/:id
+	// http://localhost:8000/api/user/tasks/:id
 	@UsePipes(new ValidationPipe())
 	@HttpCode(200)
 	@Put(':id')
 	@Auth()
-	async update(
-		@Body() dto: TaskDto,
-		@CurrentUser('id') userId: string,
-		@Param('id') id: string
-	) {
+	async update(@Body() dto: TaskDto, @CurrentUser('id') userId: string, @Param('id') id: string) {
 		return this.taskService.update(dto, id, userId)
 	}
 
-	// http://localhost:4000/api/user/tasks/:id
+	// http://localhost:8000/api/user/tasks/:id
 	@HttpCode(200)
 	@Delete(':id')
 	@Auth()

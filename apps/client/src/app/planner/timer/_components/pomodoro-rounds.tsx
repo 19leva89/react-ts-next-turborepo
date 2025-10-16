@@ -35,7 +35,7 @@ export const PomodoroRounds = ({
 						<div
 							key={index}
 							className={cn(
-								'border-border before:bg-primary relative h-5 w-5 rounded before:absolute before:left-0 before:top-0 before:h-full before:w-0 before:rounded-l before:transition-all before:duration-300',
+								'border-border before:bg-primary relative size-5 rounded before:absolute before:left-0 before:top-0 before:h-full before:w-0 before:rounded-l before:transition-all before:duration-300',
 								{
 									border: true,
 									'before:w-full before:rounded': round.isCompleted,
