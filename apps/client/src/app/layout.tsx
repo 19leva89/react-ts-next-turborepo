@@ -1,39 +1,41 @@
-import { Nunito } from 'next/font/google'
+import type { Metadata } from 'next'
 import { PropsWithChildren } from 'react'
-import { Analytics } from '@vercel/analytics/next'
+import { Noto_Sans } from 'next/font/google'
+import { Toaster } from '@repo/ui/components'
 
-import { constructMetadata } from '@/lib/utils'
-import { ThemeProvider } from '@/components/shared/providers'
-import { ClientLayout, Footer, Header } from '@/components/shared'
+import { SITE_NAME } from '@/constants/seo.constants'
+import { QueryProvider } from '@/components/providers/query-provider'
 
 import '@repo/ui/globals.css'
-import '@/app/main.css'
 
-const nunito = Nunito({
-	subsets: ['cyrillic'],
-	variable: '--font-nunito',
-	weight: ['400', '500', '600', '700', '800', '900'],
+const zen = Noto_Sans({
+	subsets: ['cyrillic', 'latin'],
+	weight: ['300', '400', '500', '600', '700'],
+	display: 'swap',
+	variable: '--font-zen',
+	style: ['normal'],
 })
 
-export const metadata = constructMetadata()
+export const metadata: Metadata = {
+	title: {
+		default: SITE_NAME,
+		template: `%s | ${SITE_NAME}`,
+	},
+	description: 'Best one for planning',
+}
 
-export default async function RootLayout({ children }: PropsWithChildren) {
+const RootLayout = ({ children }: PropsWithChildren) => {
 	return (
-		<html lang='en' suppressHydrationWarning>
-			<body className={nunito.variable}>
-				<ThemeProvider attribute='class' defaultTheme='light' enableSystem={false} enableColorScheme>
-					<ClientLayout>
-						<Header />
+		<html lang='en'>
+			<body className={zen.className}>
+				<QueryProvider>
+					{children}
 
-						<main id='site-wrapper'>{children}</main>
-
-						<Footer />
-					</ClientLayout>
-				</ThemeProvider>
-
-				{/* Allow track page views for Vercel */}
-				<Analytics />
+					<Toaster position='bottom-right' duration={1500} expand={false} richColors />
+				</QueryProvider>
 			</body>
 		</html>
 	)
 }
+
+export default RootLayout
