@@ -1,20 +1,33 @@
+import { useEffect } from 'react'
 import { Button } from '@repo/ui/components'
-import { Controller, SubmitHandler, useFormContext } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { FormProvider, Resolver, SubmitHandler, useForm, useFormContext } from 'react-hook-form'
 
 import { COLORS } from '../_constants/colors.data'
-import { Field } from '@/components/ui/field/Field'
+import { FormCombobox, FormInput } from '@/components/forms'
 import { useUpdateTimeBlock } from '../_hooks/use-update-time-block'
 import { useCreateTimeBlock } from '../_hooks/use-create-time-block'
-import { SingleSelect } from '@/components/ui/task-edit/single-select'
 import type { TypeTimeBlockFormState } from '@/types/time-block.types'
+import { TimeBlockSchema, TTimeBlockValues } from '@/components/forms/schemas'
 
 export const TimeBlockingForm = () => {
-	const { register, control, watch, reset, handleSubmit } = useFormContext<TypeTimeBlockFormState>()
+	const { watch, reset } = useFormContext<TypeTimeBlockFormState>()
 
 	const existsId = watch('id')
 
-	const { updateTimeBlock } = useUpdateTimeBlock(existsId)
-	const { createTimeBlock, isPending } = useCreateTimeBlock()
+	const { createTimeBlock, isPending: isCreating } = useCreateTimeBlock()
+	const { updateTimeBlock, isPending: isUpdating } = useUpdateTimeBlock(existsId)
+
+	const form = useForm({
+		resolver: zodResolver(TimeBlockSchema) as Resolver<TTimeBlockValues>,
+		defaultValues: {
+			id: undefined,
+			name: '',
+			duration: 5,
+			color: COLORS[COLORS.length - 1]?.value,
+			order: 1,
+		},
+	})
 
 	const onSubmit: SubmitHandler<TypeTimeBlockFormState> = (data) => {
 		const { color, id, ...rest } = data
@@ -30,61 +43,47 @@ export const TimeBlockingForm = () => {
 		}
 
 		reset({
-			color: COLORS[COLORS.length - 1],
-			duration: 0,
-			name: '',
 			id: undefined,
+			name: '',
+			duration: 0,
+			color: COLORS[COLORS.length - 1]?.value,
 			order: 1,
 		})
 	}
 
+	useEffect(() => {
+		if (existsId) {
+			const currentData = watch()
+			form.reset(currentData)
+		}
+	}, [existsId, watch, form])
+
 	return (
-		<form onSubmit={handleSubmit(onSubmit)} className='w-3/5'>
-			<Field
-				{...register('name', {
-					required: true,
-				})}
-				id='name'
-				label='Enter name:'
-				placeholder='Enter name:'
-				extra='mb-4'
-			/>
+		<FormProvider {...form}>
+			<form onSubmit={form.handleSubmit(onSubmit)} className='m-6 flex w-3/5 flex-col gap-4'>
+				<FormInput name='duration' type='number' label='Enter duration (min.)' placeholder='30' required />
 
-			<Field
-				{...register('duration', {
-					required: true,
-					valueAsNumber: true,
-				})}
-				id='duration'
-				label='Enter duration (min.):'
-				placeholder='Enter duration (min.):'
-				isNumber
-				extra='mb-4'
-			/>
+				<FormInput name='name' type='text' label='Enter name' placeholder='Time block name' />
 
-			<div>
-				<span className='mb-1.5 inline-block'>Color:</span>
-
-				<Controller
-					control={control}
+				<FormCombobox
 					name='color'
-					render={({ field: { value, onChange } }) => (
-						<SingleSelect
-							data={COLORS.map((item) => ({
-								value: item,
-								label: item,
-							}))}
-							onChange={onChange}
-							value={value ?? COLORS[COLORS.length - 1]!}
-							isColorSelect
-						/>
-					)}
+					label='Select color'
+					placeholder='Select color'
+					noResultsText='No results'
+					selectPlaceholder='Type color'
+					mapTable={COLORS.map((item) => ({
+						value: item.value,
+						label: item.label,
+						color: item.value,
+					}))}
+					popoverAlign='end'
+					className='flex h-11 items-center justify-between rounded-xl'
 				/>
-			</div>
 
-			<Button type='submit' disabled={isPending} className='mt-6'>
-				{existsId ? 'Update' : 'Create'}
-			</Button>
-		</form>
+				<Button type='submit' disabled={isCreating || isUpdating} className='mt-6'>
+					{existsId ? 'Update' : 'Create'}
+				</Button>
+			</form>
+		</FormProvider>
 	)
 }

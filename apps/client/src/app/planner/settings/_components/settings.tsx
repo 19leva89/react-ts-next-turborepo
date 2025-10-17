@@ -12,8 +12,6 @@ import { TUserValues, UserSchema } from '@/components/forms/schemas'
 
 export const Settings = () => {
 	const { data } = useProfile()
-	console.log(data?.user)
-
 	const { isPending, mutate } = useUpdateSettings()
 
 	const form = useForm<TUserValues>({

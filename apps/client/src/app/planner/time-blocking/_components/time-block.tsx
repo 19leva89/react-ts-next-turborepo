@@ -14,7 +14,7 @@ export const TimeBlock = ({ item }: { item: ITimeBlockResponse }) => {
 		<div ref={setNodeRef} style={style}>
 			<div
 				style={{
-					backgroundColor: item.color || 'lightslategray',
+					backgroundColor: item.color || 'lightSlateGray',
 					height: `${item.duration}px`,
 				}}
 				className='relative mb-3 flex items-center justify-between rounded p-4 text-sm transition-opacity'

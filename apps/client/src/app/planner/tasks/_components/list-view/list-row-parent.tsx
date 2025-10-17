@@ -19,8 +19,8 @@ export const ListRowParent = ({ value, items, label, setItems }: IListRowParent)
 		<Droppable droppableId={value}>
 			{(provided) => (
 				<div ref={provided.innerRef} {...provided.droppableProps}>
-					<div className="rounded border-t border-border bg-[#0e0f0f] [&>div]:py-3">
-						<div className="font-semibold text-xl px-4">{label}</div>
+					<div className='border-border bg-accent rounded border-t [&>div]:py-3'>
+						<div className='px-4 text-xl font-semibold'>{label}</div>
 					</div>
 
 					{filterTasks(items, value)?.map((item, index) => (

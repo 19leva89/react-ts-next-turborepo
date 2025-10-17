@@ -3,12 +3,12 @@ import type { Dispatch, SetStateAction } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { GripVerticalIcon, LoaderIcon, TrashIcon } from 'lucide-react'
 
-import { Checkbox } from '@/components/ui/checkbox'
+import { Input } from '@repo/ui/components'
+import { Checkbox } from '@/components/checkbox'
 import { useDeleteTask } from '../../_hooks/useDeleteTask'
 import { useTaskDebounce } from '../../_hooks/useTaskDebounce'
-import { DatePicker } from '@/components/ui/task-edit/date-picker'
-import { SingleSelect } from '@/components/ui/task-edit/single-select'
-import { TransparentField } from '@/components/ui/field/TransparentField'
+import { DatePicker } from '@/components/date-picker'
+import { SingleSelect } from '@/components/single-select'
 import type { ITaskResponse, TypeTaskFormState } from '@/types/task.types'
 
 interface IListRow {
@@ -33,7 +33,7 @@ export const ListRow = ({ item, setItems }: IListRow) => {
 	return (
 		<div
 			className={cn(
-				'border-border animation-opacity relative grid grid-cols-[1.4fr_0.4fr_0.4fr_0.1fr] gap-2 rounded border-t py-2 font-normal transition-colors hover:bg-[#1c1f1f]',
+				'border-border animation-opacity hover:bg-primary/20 relative grid grid-cols-[1.4fr_0.4fr_0.4fr_0.1fr] gap-2 rounded border-t py-2 font-normal transition-colors',
 				watch('isCompleted') &&
 					'[&>div>span>input]:italic [&>div>span>input]:line-through [&>div>span>input]:opacity-50',
 			)}
@@ -52,7 +52,12 @@ export const ListRow = ({ item, setItems }: IListRow) => {
 					render={({ field: { value, onChange } }) => <Checkbox onChange={onChange} checked={value} />}
 				/>
 
-				<TransparentField {...register('name')} />
+				<Input
+					type='text'
+					placeholder='Input task name'
+					className='w-3/4 border-none bg-transparent shadow-none'
+					{...register('name')}
+				/>
 			</div>
 
 			<div className='inline-flex items-center justify-center'>

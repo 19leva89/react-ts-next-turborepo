@@ -1,11 +1,11 @@
 'use client'
 
-import { Loader } from '@/components/ui/loader'
-import { useLocalStorage } from '@/hooks/use-local-storage'
+import { Spinner } from '@repo/ui/components'
 
+import { SwitcherView } from './switcher-view'
 import { ListView } from './list-view/list-view'
 import { KanbanView } from './kanban-view/kanban-view'
-import { SwitcherView } from './switcher-view'
+import { useLocalStorage } from '@/hooks/use-local-storage'
 
 export type TypeView = 'list' | 'kanban'
 
@@ -15,7 +15,13 @@ export const TasksView = () => {
 		defaultValue: 'list',
 	})
 
-	if (isLoading) return <Loader />
+	if (isLoading) {
+		return (
+			<div className='m-6 flex w-full items-center justify-center'>
+				<Spinner className='size-5' />
+			</div>
+		)
+	}
 
 	return (
 		<div>

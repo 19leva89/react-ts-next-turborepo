@@ -1,7 +1,7 @@
 import { cn } from '@repo/ui/lib'
 import { XIcon } from 'lucide-react'
 
-import { Badge } from '@/components/ui/badge'
+import { Badge } from '@/components/badge'
 import { useOutside } from '@/hooks/use-outside'
 
 export interface IOption {
@@ -54,6 +54,7 @@ export function SingleSelect({ data, onChange, value, isColorSelect }: ISingleSe
 					<XIcon size={14} />
 				</button>
 			)}
+
 			{isShow && (
 				<div
 					style={{

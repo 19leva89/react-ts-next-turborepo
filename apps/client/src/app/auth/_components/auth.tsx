@@ -9,7 +9,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { FormProvider, Resolver, SubmitHandler, useForm } from 'react-hook-form'
 
 import { FormInput } from '@/components/forms'
-import { Heading } from '@/components/ui/heading'
+import { Heading } from '@/components/heading'
 import { authService } from '@/services/auth.service'
 import { DASHBOARD_PAGES } from '@/config/pages-url.config'
 import { AxiosServerError, ServerError } from '@/types/auth.types'

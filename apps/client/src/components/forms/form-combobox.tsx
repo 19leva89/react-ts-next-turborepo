@@ -10,6 +10,7 @@ import {
 	CommandList,
 	Field,
 	FieldError,
+	FieldLabel,
 	Popover,
 	PopoverContent,
 	PopoverTrigger,
@@ -19,28 +20,36 @@ import { cn } from '@repo/ui/lib'
 import { useFormContext } from 'react-hook-form'
 import { CheckIcon, ChevronsUpDownIcon } from 'lucide-react'
 
+import { RequiredSymbol } from '@/components'
+
 interface Item {
-	id: number
-	name: string
-	communityId?: number
+	value: string
+	label: string
+	color: string
 }
 
 interface Props {
 	name: string
+	label?: string
 	placeholder: string
+	required?: boolean
 	noResultsText: string
 	selectPlaceholder: string
 	mapTable: Item[]
+	popoverAlign?: 'start' | 'end'
 	onSelect?: (item: Item) => void
 	className?: string
 }
 
 export const FormCombobox = ({
 	name,
+	label,
 	placeholder,
+	required,
 	noResultsText,
 	selectPlaceholder,
 	mapTable,
+	popoverAlign,
 	onSelect,
 	className,
 }: Props) => {
@@ -55,13 +64,13 @@ export const FormCombobox = ({
 	const value = watch(name)
 	const errorText = errors[name]?.message as string
 
-	const selectedItem = mapTable.find((item) => item.name === value)
+	const selectedItem = mapTable.find((item) => item.value === value)
 
-	const handleSelect = (currentValue: number) => {
-		const selectedItem = mapTable.find((item) => item.id === currentValue)
+	const handleSelect = (currentValue: string) => {
+		const selectedItem = mapTable.find((item) => item.value === currentValue)
 
 		if (selectedItem) {
-			setValue(name, selectedItem.name, { shouldValidate: true })
+			setValue(name, selectedItem.value, { shouldValidate: true })
 
 			if (onSelect) {
 				onSelect(selectedItem)
@@ -71,19 +80,37 @@ export const FormCombobox = ({
 		setOpen(false)
 	}
 
+	const ColorSwatch = ({ color }: { color: string }) => (
+		<div className='mr-2 size-4 rounded' style={{ backgroundColor: color }} />
+	)
+
 	return (
 		<Popover open={open} onOpenChange={setOpen}>
 			<Field>
+				{label && (
+					<FieldLabel htmlFor={name}>
+						{label} {required && <RequiredSymbol />}
+					</FieldLabel>
+				)}
+
 				<PopoverTrigger asChild>
 					<Button
 						variant='outline'
 						role='combobox'
 						aria-expanded={open}
 						onClick={() => setOpen(true)}
-						className={cn('border-[#e5e7eb] text-[#78716c] hover:bg-transparent', className)}
+						className={cn('hover:bg-accent border-[#e5e7eb] text-[#78716c]', className)}
 						{...register(name)}
 					>
-						{selectedItem ? selectedItem.name : placeholder}
+						{selectedItem ? (
+							<div className='flex items-center'>
+								<ColorSwatch color={selectedItem.color} />
+
+								{selectedItem.label}
+							</div>
+						) : (
+							placeholder
+						)}
 
 						<ChevronsUpDownIcon className='ml-2 size-4 shrink-0 opacity-50' />
 					</Button>
@@ -92,7 +119,7 @@ export const FormCombobox = ({
 				{errorText && <FieldError>{errorText}</FieldError>}
 			</Field>
 
-			<PopoverContent className='w-50 p-0'>
+			<PopoverContent align={popoverAlign} className='p-0'>
 				<Command>
 					<CommandInput placeholder={selectPlaceholder} name={name} />
 
@@ -101,11 +128,14 @@ export const FormCombobox = ({
 
 						<CommandGroup>
 							{mapTable.map((item) => (
-								<CommandItem key={item.id} value={item.name} onSelect={() => handleSelect(item.id)}>
+								<CommandItem key={item.value} value={item.label} onSelect={() => handleSelect(item.value)}>
 									<CheckIcon
-										className={cn('mr-2 size-4', value === item.name ? 'opacity-100' : 'opacity-0')}
+										className={cn('mr-2 size-4', value === item.label ? 'opacity-100' : 'opacity-0')}
 									/>
-									{item.name}
+
+									<ColorSwatch color={item.color} />
+
+									{item.label}
 								</CommandItem>
 							))}
 						</CommandGroup>

@@ -1,14 +1,14 @@
 import { cn } from '@repo/ui/lib'
-import type { Dispatch, SetStateAction } from 'react'
+import { Input } from '@repo/ui/components'
 import { Controller, useForm } from 'react-hook-form'
+import type { Dispatch, SetStateAction } from 'react'
 import { GripVerticalIcon, LoaderIcon, TrashIcon } from 'lucide-react'
 
-import { Checkbox } from '@/components/ui/checkbox'
+import { Checkbox } from '@/components/checkbox'
 import { useDeleteTask } from '../../_hooks/useDeleteTask'
 import { useTaskDebounce } from '../../_hooks/useTaskDebounce'
-import { DatePicker } from '@/components/ui/task-edit/date-picker'
-import { SingleSelect } from '@/components/ui/task-edit/single-select'
-import { TransparentField } from '@/components/ui/field/TransparentField'
+import { DatePicker } from '@/components/date-picker'
+import { SingleSelect } from '@/components/single-select'
 import type { ITaskResponse, TypeTaskFormState } from '@/types/task.types'
 
 interface IKanbanCard {
@@ -33,7 +33,7 @@ export const KanbanCard = ({ item, setItems }: IKanbanCard) => {
 	return (
 		<div
 			className={cn(
-				'border-border animation-opacity group relative mt-5 rounded border bg-[#0e0f0f] p-4 transition-all',
+				'border-border animation-opacity bg-accent group relative mt-5 rounded border p-4 transition-all',
 				watch('isCompleted') && 'italic line-through opacity-50',
 			)}
 		>
@@ -51,7 +51,12 @@ export const KanbanCard = ({ item, setItems }: IKanbanCard) => {
 					render={({ field: { value, onChange } }) => <Checkbox onChange={onChange} checked={value} />}
 				/>
 
-				<TransparentField {...register('name')} />
+				<Input
+					type='text'
+					placeholder='Input task name'
+					className='w-3/4 border-none bg-transparent shadow-none'
+					{...register('name')}
+				/>
 			</div>
 
 			<div className='text-[83%] [&>div]:mb-2.5 [&>div]:w-max [&>div]:min-w-[6rem]'>

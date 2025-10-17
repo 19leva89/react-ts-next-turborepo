@@ -21,9 +21,9 @@ export const KanbanColumn = ({ value, items, label, setItems }: IKanbanColumn) =
 				<div
 					ref={provided.innerRef}
 					{...provided.droppableProps}
-					className="w-[17rem] min-h-[79vh] whitespace-nowrap"
+					className='w-68 min-h-[79vh] whitespace-nowrap'
 				>
-					<div className="text-lg font-semibold mb-4">{label}</div>
+					<div className='mb-4 text-lg font-semibold'>{label}</div>
 
 					{filterTasks(items, value)?.map((item, index) => (
 						<Draggable key={item.id} draggableId={String(item.id) || String('temp-task-id')} index={index}>

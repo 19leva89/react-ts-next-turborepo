@@ -3,8 +3,8 @@
 import { DragDropContext } from '@hello-pangea/dnd'
 
 import { COLUMNS } from '../columns.data'
-import { useTasks } from '../../_hooks/useTasks'
 import { KanbanColumn } from './kanban-column'
+import { useTasks } from '../../_hooks/useTasks'
 import { useTaskDnd } from '../../_hooks/useTaskDnd'
 
 export const KanbanView = () => {
@@ -13,7 +13,7 @@ export const KanbanView = () => {
 
 	return (
 		<DragDropContext onDragEnd={onDragEnd}>
-			<div className="grid grid-flow-col gap-8 w-full overflow-x-auto">
+			<div className='grid w-full grid-flow-col gap-8 overflow-x-auto'>
 				{COLUMNS.map((column) => (
 					<KanbanColumn
 						key={column.value}

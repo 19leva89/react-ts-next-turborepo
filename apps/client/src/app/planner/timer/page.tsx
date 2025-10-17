@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 
-import { Heading } from '@/components/ui/heading'
+import { Heading } from '@/components/heading'
 import { Pomodoro } from './_components/pomodoro'
 import { NO_INDEX_PAGE } from '@/constants/seo.constants'
 
