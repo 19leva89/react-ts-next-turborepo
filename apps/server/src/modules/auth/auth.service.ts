@@ -1,7 +1,6 @@
 import { verify } from 'argon2'
 import type { Response } from 'express'
 import { JwtService } from '@nestjs/jwt'
-import { ConfigService } from '@nestjs/config'
 import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common'
 
 import { AuthDto } from './dto/auth.dto'
@@ -12,15 +11,9 @@ export class AuthService {
 	EXPIRE_DAY_REFRESH_TOKEN = 1
 	REFRESH_TOKEN_NAME = 'refreshToken'
 
-	// Cookie on Server side
-	get COOKIE_DOMAIN() {
-		return this.configService.get<string>('COOKIE_DOMAIN') || 'localhost'
-	}
-
 	constructor(
 		private jwt: JwtService,
 		private userService: UserService,
-		private configService: ConfigService,
 	) {}
 
 	async login(dto: AuthDto) {
@@ -86,7 +79,7 @@ export class AuthService {
 
 		res.cookie(this.REFRESH_TOKEN_NAME, refreshToken, {
 			httpOnly: true,
-			domain: this.COOKIE_DOMAIN,
+			domain: process.env.COOKIE_DOMAIN,
 			expires: expiresIn,
 			secure: process.env.NODE_ENV === 'production',
 			sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // lax if production
@@ -100,7 +93,7 @@ export class AuthService {
 
 		res.cookie(this.REFRESH_TOKEN_NAME, '', {
 			httpOnly: true,
-			domain: this.COOKIE_DOMAIN,
+			domain: process.env.COOKIE_DOMAIN,
 			expires: new Date(0),
 			secure: process.env.NODE_ENV === 'production',
 			sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // lax if production

@@ -1,7 +1,14 @@
 import Cookies from 'js-cookie'
 
+const getClientCookieDomain = () => {
+	if (typeof window === 'undefined') return 'localhost' // SSR-safe
+	const hostname = window.location.hostname
+
+	return hostname === 'localhost' ? 'localhost' : `.${hostname}`
+}
+
 // Cookie on Client side
-const COOKIE_DOMAIN = process.env.SERVER_API_URL
+const COOKIE_DOMAIN = getClientCookieDomain()
 
 export enum EnumTokens {
 	'ACCESS_TOKEN' = 'accessToken',
@@ -22,16 +29,15 @@ export const getAccessToken = () => {
 export const saveTokenStorage = (accessToken: string) => {
 	Cookies.set(EnumTokens.ACCESS_TOKEN, accessToken, {
 		domain: COOKIE_DOMAIN,
-		expires: 1,
-		secure: true,
-		sameSite: 'none',
+		secure: process.env.NODE_ENV === 'production',
+		sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // lax if production
 	})
 }
 
 export const removeFromStorage = () => {
 	Cookies.remove(EnumTokens.ACCESS_TOKEN, {
 		domain: COOKIE_DOMAIN,
-		secure: true,
-		sameSite: 'none',
+		secure: process.env.NODE_ENV === 'production',
+		sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // lax if production
 	})
 }

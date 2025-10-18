@@ -5,7 +5,7 @@ import { authService } from '@/services/auth.service'
 import { getAccessToken, removeFromStorage } from '@/services/auth-token.service'
 
 const options: CreateAxiosDefaults = {
-	baseURL: `${process.env.SERVER_API_URL}/api`,
+	baseURL: `${process.env.NEXT_PUBLIC_SERVER_API_URL}/api`,
 	headers: {
 		'Content-Type': 'application/json',
 	},
@@ -38,6 +38,7 @@ axiosWithAuth.interceptors.response.use(
 			originalRequest._isRetry = true
 			try {
 				await authService.getNewTokens()
+
 				return axiosWithAuth.request(originalRequest)
 			} catch (error) {
 				if (errorCatch(error) === 'jwt expired') removeFromStorage()
