@@ -30,7 +30,9 @@ export const getAccessToken = () => {
 }
 
 export const saveTokenStorage = (accessToken: string) => {
-	console.log('Saving accessToken with domain:', COOKIE_DOMAIN) // Debug
+	if (process.env.NODE_ENV !== 'production') {
+		console.log('Saving accessToken with domain:', COOKIE_DOMAIN)
+	}
 
 	try {
 		Cookies.set(EnumTokens.ACCESS_TOKEN, accessToken, {

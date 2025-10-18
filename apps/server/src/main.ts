@@ -1,6 +1,5 @@
 import cookieParser from 'cookie-parser'
 import { NestFactory } from '@nestjs/core'
-
 import { AppModule } from './app.module'
 
 async function bootstrap() {
@@ -21,6 +20,18 @@ async function bootstrap() {
 
 	// Port back
 	await app.listen(process.env.PORT || process.env.SERVER_API_PORT || 8000)
+
+	console.log(`Application is running on: ${await app.getUrl()}`)
 }
 
-bootstrap()
+// Export the bootstrap function for platforms that require it
+export { bootstrap }
+
+// Start the application if this file is run directly
+if (require.main === module) {
+	bootstrap().catch((err) => {
+		console.error('Error during bootstrap:', err)
+
+		process.exit(1)
+	})
+}
