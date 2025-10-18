@@ -16,9 +16,12 @@ export enum EnumTokens {
 }
 
 export const getAccessToken = () => {
-	const accessToken = Cookies.get(EnumTokens.ACCESS_TOKEN)
+	let accessToken = Cookies.get(EnumTokens.ACCESS_TOKEN)
 
-	// For debugging
+	if (!accessToken) {
+		accessToken = localStorage.getItem(EnumTokens.ACCESS_TOKEN) // Fallback
+	}
+
 	if (process.env.NODE_ENV !== 'production') {
 		console.log('accessToken client:', accessToken)
 	}
@@ -27,11 +30,19 @@ export const getAccessToken = () => {
 }
 
 export const saveTokenStorage = (accessToken: string) => {
-	Cookies.set(EnumTokens.ACCESS_TOKEN, accessToken, {
-		domain: COOKIE_DOMAIN,
-		secure: process.env.NODE_ENV === 'production',
-		sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // lax if production
-	})
+	console.log('Saving accessToken with domain:', COOKIE_DOMAIN) // Debug
+
+	try {
+		Cookies.set(EnumTokens.ACCESS_TOKEN, accessToken, {
+			domain: COOKIE_DOMAIN,
+			secure: process.env.NODE_ENV === 'production',
+			sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // lax if production
+		})
+	} catch (e) {
+		console.warn('Cookie failed, fallback to localStorage:', e)
+
+		localStorage.setItem(EnumTokens.ACCESS_TOKEN, accessToken) // Fallback
+	}
 }
 
 export const removeFromStorage = () => {
@@ -40,4 +51,6 @@ export const removeFromStorage = () => {
 		secure: process.env.NODE_ENV === 'production',
 		sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // lax if production
 	})
+
+	localStorage.removeItem(EnumTokens.ACCESS_TOKEN) // Fallback
 }

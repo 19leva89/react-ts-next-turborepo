@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { verify } from 'argon2'
 import type { Response } from 'express'
 import { JwtService } from '@nestjs/jwt'
@@ -17,7 +19,7 @@ export class AuthService {
 	) {}
 
 	async login(dto: AuthDto) {
-		const user = await this.validateUser(dto)
+		const { password, ...user } = await this.validateUser(dto)
 		const tokens = this.issueTokens(user.id)
 
 		return { user, ...tokens }
@@ -27,7 +29,7 @@ export class AuthService {
 		const oldUser = await this.userService.getByEmail(dto.email)
 		if (oldUser) throw new BadRequestException('User already exists')
 
-		const user = await this.userService.create(dto)
+		const { password, ...user } = await this.userService.create(dto)
 
 		const tokens = this.issueTokens(user.id)
 
@@ -42,7 +44,7 @@ export class AuthService {
 		console.log('Refresh token is valid on server, payload:', result)
 		if (!result) throw new UnauthorizedException('Invalid refresh token')
 
-		const user = await this.userService.getById(result.id)
+		const { password, ...user } = await this.userService.getById(result.id)
 
 		const tokens = this.issueTokens(user.id)
 
