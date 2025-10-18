@@ -7,7 +7,6 @@ import { TaskModule } from './modules/task/task.module'
 import { UserModule } from './modules/user/user.module'
 import { PomodoroModule } from './modules/pomodoro/pomodoro.module'
 import { TimeBlockModule } from './modules/time-block/time-block.module'
-
 import { HttpExceptionFilter } from './common/filters/http-exception.filter'
 
 @Module({

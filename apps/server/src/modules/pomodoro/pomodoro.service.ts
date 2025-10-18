@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 
-import { PrismaService } from 'src/prisma.service'
+import { PrismaService } from '../../prisma.service'
 import { PomodoroRoundDto, PomodoroSessionDto } from './pomodoro.dto'
 
 @Injectable()
@@ -12,7 +12,7 @@ export class PomodoroService {
 
 		return this.prisma.pomodoroSession.findFirst({
 			where: { createdAt: { gte: new Date(today) }, userId },
-			include: { rounds: { orderBy: { id: 'asc' } } }
+			include: { rounds: { orderBy: { id: 'asc' } } },
 		})
 	}
 
@@ -23,7 +23,7 @@ export class PomodoroService {
 
 		const user = await this.prisma.user.findUnique({
 			where: { id: userId },
-			select: { intervalsCount: true }
+			select: { intervalsCount: true },
 		})
 
 		if (!user) throw new NotFoundException('User not found')
@@ -33,37 +33,33 @@ export class PomodoroService {
 				rounds: {
 					createMany: {
 						data: Array.from({ length: user.intervalsCount }, () => ({
-							totalSeconds: 0
-						}))
-					}
+							totalSeconds: 0,
+						})),
+					},
 				},
-				user: { connect: { id: userId } }
+				user: { connect: { id: userId } },
 			},
-			include: { rounds: true }
+			include: { rounds: true },
 		})
 	}
 
-	async update(
-		dto: Partial<PomodoroSessionDto>,
-		pomodoroId: string,
-		userId: string
-	) {
+	async update(dto: Partial<PomodoroSessionDto>, pomodoroId: string, userId: string) {
 		return this.prisma.pomodoroSession.update({
 			where: { userId, id: pomodoroId },
-			data: dto
+			data: dto,
 		})
 	}
 
 	async updateRound(dto: Partial<PomodoroRoundDto>, roundId: string) {
 		return this.prisma.pomodoroRound.update({
 			where: { id: roundId },
-			data: dto
+			data: dto,
 		})
 	}
 
 	async deleteSession(sessionId: string, userId: string) {
 		return this.prisma.pomodoroSession.delete({
-			where: { id: sessionId, userId }
+			where: { id: sessionId, userId },
 		})
 	}
 }

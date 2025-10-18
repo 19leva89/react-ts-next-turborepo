@@ -3,8 +3,8 @@ import { Injectable } from '@nestjs/common'
 import { startOfDay, subDays } from 'date-fns'
 
 import { UserDto } from './user.dto'
-import { PrismaService } from 'src/prisma.service'
-import { AuthDto } from 'src/modules/auth/dto/auth.dto'
+import { AuthDto } from '../auth/dto/auth.dto'
+import { PrismaService } from '../../prisma.service'
 
 @Injectable()
 export class UserService {
@@ -13,7 +13,7 @@ export class UserService {
 	getById(id: string) {
 		return this.prisma.user.findUnique({
 			where: { id },
-			include: { tasks: true }
+			include: { tasks: true },
 		})
 	}
 
@@ -26,18 +26,18 @@ export class UserService {
 
 		const totalTasks = profile.tasks.length
 		const completedTasks = await this.prisma.task.count({
-			where: { userId: id, isCompleted: true }
+			where: { userId: id, isCompleted: true },
 		})
 
 		const todayStart = startOfDay(new Date())
 		const weekStart = startOfDay(subDays(new Date(), 7))
 
 		const todayTasks = await this.prisma.task.count({
-			where: { userId: id, createdAt: { gte: todayStart.toISOString() } }
+			where: { userId: id, createdAt: { gte: todayStart.toISOString() } },
 		})
 
 		const weekTasks = await this.prisma.task.count({
-			where: { userId: id, createdAt: { gte: weekStart.toISOString() } }
+			where: { userId: id, createdAt: { gte: weekStart.toISOString() } },
 		})
 
 		const { password, ...rest } = profile
@@ -48,8 +48,8 @@ export class UserService {
 				{ label: 'Total', value: totalTasks },
 				{ label: 'Completed tasks', value: completedTasks },
 				{ label: 'Today tasks', value: todayTasks },
-				{ label: 'Week tasks', value: weekTasks }
-			]
+				{ label: 'Week tasks', value: weekTasks },
+			],
 		}
 	}
 
@@ -57,7 +57,7 @@ export class UserService {
 		const user = {
 			email: dto.email,
 			name: '',
-			password: await hash(dto.password)
+			password: await hash(dto.password),
 		}
 
 		return this.prisma.user.create({ data: user })
@@ -73,7 +73,7 @@ export class UserService {
 		return this.prisma.user.update({
 			where: { id },
 			data,
-			select: { name: true, email: true }
+			select: { name: true, email: true },
 		})
 	}
 }

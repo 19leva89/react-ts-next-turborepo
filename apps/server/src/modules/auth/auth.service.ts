@@ -5,7 +5,7 @@ import { ConfigService } from '@nestjs/config'
 import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common'
 
 import { AuthDto } from './dto/auth.dto'
-import { UserService } from 'src/modules/user/user.service'
+import { UserService } from '../user/user.service'
 
 @Injectable()
 export class AuthService {

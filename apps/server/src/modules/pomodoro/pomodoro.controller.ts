@@ -12,9 +12,9 @@ import {
 } from '@nestjs/common'
 
 import { PomodoroService } from './pomodoro.service'
-import { Auth } from 'src/modules/auth/decorators/auth.decorator'
+import { Auth } from '../auth/decorators/auth.decorator'
+import { CurrentUser } from '../auth/decorators/user.decorator'
 import { PomodoroRoundDto, PomodoroSessionDto } from './pomodoro.dto'
-import { CurrentUser } from 'src/modules/auth/decorators/user.decorator'
 
 @Controller('user/timer')
 export class PomodoroController {

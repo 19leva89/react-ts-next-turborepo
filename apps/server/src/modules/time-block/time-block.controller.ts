@@ -14,8 +14,8 @@ import {
 import { TimeBlockDto } from './dto/time-block.dto'
 import { UpdateOrderDto } from './dto/update-order.dto'
 import { TimeBlockService } from './time-block.service'
-import { Auth } from 'src/modules/auth/decorators/auth.decorator'
-import { CurrentUser } from 'src/modules/auth/decorators/user.decorator'
+import { Auth } from '../auth/decorators/auth.decorator'
+import { CurrentUser } from '../auth/decorators/user.decorator'
 
 @Controller('user/time-blocks')
 export class TimeBlockController {

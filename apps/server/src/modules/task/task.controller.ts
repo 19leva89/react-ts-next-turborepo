@@ -13,8 +13,8 @@ import {
 
 import { TaskDto } from './task.dto'
 import { TaskService } from './task.service'
-import { Auth } from 'src/modules/auth/decorators/auth.decorator'
-import { CurrentUser } from 'src/modules/auth/decorators/user.decorator'
+import { Auth } from '../auth/decorators/auth.decorator'
+import { CurrentUser } from '../auth/decorators/user.decorator'
 
 @Controller('user/tasks')
 export class TaskController {
