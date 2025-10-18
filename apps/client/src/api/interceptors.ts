@@ -5,7 +5,7 @@ import { authService } from '@/services/auth.service'
 import { getAccessToken, removeFromStorage } from '@/services/auth-token.service'
 
 const options: CreateAxiosDefaults = {
-	baseURL: `${process.env.NEXT_PUBLIC_SERVER_API_URL}/api`,
+	baseURL: `${process.env.SERVER_API_URL}/api`,
 	headers: {
 		'Content-Type': 'application/json',
 	},

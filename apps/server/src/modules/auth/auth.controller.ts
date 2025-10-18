@@ -9,9 +9,9 @@ import {
 	UsePipes,
 	ValidationPipe,
 } from '@nestjs/common'
-import { Request, Response } from 'express'
-import { AuthService } from './auth.service'
 import { AuthDto } from './dto/auth.dto'
+import { AuthService } from './auth.service'
+import type { Request, Response } from 'express'
 
 @Controller('auth')
 export class AuthController {

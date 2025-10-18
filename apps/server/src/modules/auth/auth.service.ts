@@ -1,5 +1,5 @@
 import { verify } from 'argon2'
-import { Response } from 'express'
+import type { Response } from 'express'
 import { JwtService } from '@nestjs/jwt'
 import { ConfigService } from '@nestjs/config'
 import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common'

@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie'
 
 // Cookie on Client side
-const COOKIE_DOMAIN = process.env.NEXT_PUBLIC_SERVER_API_URL
+const COOKIE_DOMAIN = process.env.SERVER_API_URL
 
 export enum EnumTokens {
 	'ACCESS_TOKEN' = 'accessToken',
