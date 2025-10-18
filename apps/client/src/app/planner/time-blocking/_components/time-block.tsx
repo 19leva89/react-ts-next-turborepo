@@ -1,3 +1,4 @@
+import { Button } from '@repo/ui/components'
 import { useFormContext } from 'react-hook-form'
 import { EditIcon, GripVerticalIcon, LoaderIcon, TrashIcon } from 'lucide-react'
 
@@ -20,22 +21,26 @@ export const TimeBlock = ({ item }: { item: ITimeBlockResponse }) => {
 				className='relative mb-3 flex items-center justify-between rounded p-4 text-sm transition-opacity'
 			>
 				<div className='flex items-center'>
-					<button
+					<Button
 						{...attributes}
 						{...listeners}
+						variant='ghost'
+						size='icon-sm'
 						aria-describedby='time-block'
-						className='cursor-pointer opacity-100 transition-opacity duration-300 ease-in-out hover:opacity-50'
+						className='opacity-50 transition-opacity duration-300 ease-in-out hover:bg-transparent hover:opacity-100'
 					>
-						<GripVerticalIcon className='size-4' />
-					</button>
+						<GripVerticalIcon />
+					</Button>
 
 					<div>
 						{item.name} <i className='text-xs opacity-50'>({item.duration} min.)</i>
 					</div>
 				</div>
 
-				<div className='flex items-center gap-2'>
-					<button
+				<div className='flex items-center gap-1'>
+					<Button
+						variant='ghost'
+						size='icon-sm'
 						onClick={() => {
 							reset({
 								id: item.id,
@@ -45,17 +50,19 @@ export const TimeBlock = ({ item }: { item: ITimeBlockResponse }) => {
 								order: item.order,
 							})
 						}}
-						className='mr-2 cursor-pointer opacity-50 transition-opacity duration-300 ease-in-out hover:opacity-100'
+						className='opacity-50 transition-opacity duration-300 ease-in-out hover:bg-transparent hover:opacity-100'
 					>
-						<EditIcon size={16} />
-					</button>
+						<EditIcon />
+					</Button>
 
-					<button
+					<Button
+						variant='ghost'
+						size='icon-sm'
 						onClick={() => deleteTimeBlock()}
-						className='cursor-pointer opacity-50 transition-opacity duration-300 ease-in-out hover:opacity-100'
+						className='opacity-50 transition-opacity duration-300 ease-in-out hover:bg-transparent hover:opacity-100'
 					>
-						{isDeletePending ? <LoaderIcon size={16} /> : <TrashIcon size={16} />}
-					</button>
+						{isDeletePending ? <LoaderIcon /> : <TrashIcon />}
+					</Button>
 				</div>
 			</div>
 		</div>

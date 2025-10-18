@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-import { IMenuItem } from './menu.interface'
+import { IMenuItem } from '@/components/sidebar'
 
 export const MenuItem = ({ item }: { item: IMenuItem }) => {
 	return (

@@ -1,14 +1,8 @@
-import {
-	BadRequestException,
-	Inject,
-	Injectable,
-	NotFoundException,
-	UnauthorizedException
-} from '@nestjs/common'
 import { verify } from 'argon2'
 import { Response } from 'express'
 import { JwtService } from '@nestjs/jwt'
 import { ConfigService } from '@nestjs/config'
+import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common'
 
 import { AuthDto } from './dto/auth.dto'
 import { UserService } from 'src/modules/user/user.service'
@@ -19,17 +13,18 @@ export class AuthService {
 	REFRESH_TOKEN_NAME = 'refreshToken'
 
 	// Cookie on Server side
-	COOKIE_DOMAIN =
-		process.env.NODE_ENV === 'production' ? '.onrender.com' : 'localhost'
+	get COOKIE_DOMAIN() {
+		return this.configService.get<string>('COOKIE_DOMAIN') || 'localhost'
+	}
 
 	constructor(
 		private jwt: JwtService,
 		private userService: UserService,
-		@Inject(ConfigService) private configService: ConfigService
+		private configService: ConfigService,
 	) {}
 
 	async login(dto: AuthDto) {
-		const { password, ...user } = await this.validateUser(dto)
+		const user = await this.validateUser(dto)
 		const tokens = this.issueTokens(user.id)
 
 		return { user, ...tokens }
@@ -39,7 +34,7 @@ export class AuthService {
 		const oldUser = await this.userService.getByEmail(dto.email)
 		if (oldUser) throw new BadRequestException('User already exists')
 
-		const { password, ...user } = await this.userService.create(dto)
+		const user = await this.userService.create(dto)
 
 		const tokens = this.issueTokens(user.id)
 
@@ -54,7 +49,7 @@ export class AuthService {
 		console.log('Refresh token is valid on server, payload:', result)
 		if (!result) throw new UnauthorizedException('Invalid refresh token')
 
-		const { password, ...user } = await this.userService.getById(result.id)
+		const user = await this.userService.getById(result.id)
 
 		const tokens = this.issueTokens(user.id)
 
@@ -93,26 +88,24 @@ export class AuthService {
 			httpOnly: true,
 			domain: this.COOKIE_DOMAIN,
 			expires: expiresIn,
-			secure: true,
-			// lax if production
-			sameSite: 'none'
+			secure: process.env.NODE_ENV === 'production',
+			sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // lax if production
 		})
 
-		console.log('Refresh token added to cookies.')
+		console.log('Refresh token added to cookies')
 	}
 
 	removeRefreshTokenFromResponse(res: Response) {
-		console.log('Removing refresh token from response.')
+		console.log('Removing refresh token from response')
 
 		res.cookie(this.REFRESH_TOKEN_NAME, '', {
 			httpOnly: true,
 			domain: this.COOKIE_DOMAIN,
 			expires: new Date(0),
-			secure: true,
-			// lax if production
-			sameSite: 'none'
+			secure: process.env.NODE_ENV === 'production',
+			sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // lax if production
 		})
 
-		console.log('Refresh token removed.')
+		console.log('Refresh token removed')
 	}
 }

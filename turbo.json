@@ -6,7 +6,7 @@
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*", "!README.md"],
       "outputs": [".next/**", "!.next/cache/**", "build/**"],
-      "env": ["DATABASE_URL", "SERVER_API_PORT", "NODE_ENV"]
+      "env": ["DATABASE_URL", "NEXT_PUBLIC_CLIENT_URL", "NEXT_PUBLIC_SERVER_API_URL","SERVER_API_PORT", "NODE_ENV"]
     },
     "lint": {
       "dependsOn": ["^lint"]

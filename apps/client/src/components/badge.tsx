@@ -1,10 +1,10 @@
-import type { CSSProperties, PropsWithChildren } from 'react'
 import { tv } from 'tailwind-variants'
+import type { CSSProperties, PropsWithChildren } from 'react'
 
 interface IBadge {
-	className?: string
 	variant?: string
 	style?: CSSProperties
+	className?: string
 }
 
 const badge = tv({
@@ -25,11 +25,11 @@ const badge = tv({
 export function Badge({ children, className, variant, style }: PropsWithChildren<IBadge>) {
 	return (
 		<span
+			style={style}
 			className={badge({
 				backgroundColor: variant as 'low' | 'high' | 'medium',
 				className,
 			})}
-			style={style}
 		>
 			{children}
 		</span>

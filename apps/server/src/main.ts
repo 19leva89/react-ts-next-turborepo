@@ -12,7 +12,7 @@ async function bootstrap() {
 	app.use(cookieParser())
 
 	app.enableCors({
-		origin: ['http://localhost:3000', 'https://react-ts-next-red-planner-trello.onrender.com'], // Port front
+		origin: [`${process.env.NEXT_PUBLIC_CLIENT_URL}`], // Port front
 		credentials: true,
 		exposedHeaders: ['Set-Cookie'],
 		methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],

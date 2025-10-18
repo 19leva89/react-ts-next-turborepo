@@ -2,10 +2,10 @@
 
 import { Spinner } from '@repo/ui/components'
 
+import { useLocalStorage } from '@/hooks'
 import { SwitcherView } from './switcher-view'
 import { ListView } from './list-view/list-view'
 import { KanbanView } from './kanban-view/kanban-view'
-import { useLocalStorage } from '@/hooks/use-local-storage'
 
 export type TypeView = 'list' | 'kanban'
 
@@ -24,7 +24,7 @@ export const TasksView = () => {
 	}
 
 	return (
-		<div>
+		<div className='mx-2'>
 			<SwitcherView setType={setType} type={type} />
 
 			{type === 'list' ? <ListView /> : <KanbanView />}

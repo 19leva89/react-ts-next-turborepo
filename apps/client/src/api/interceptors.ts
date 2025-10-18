@@ -1,12 +1,11 @@
 import axios, { type CreateAxiosDefaults } from 'axios'
 
 import { errorCatch } from './error'
-import { BASE_URL } from '@/constants/url.constants'
 import { authService } from '@/services/auth.service'
 import { getAccessToken, removeFromStorage } from '@/services/auth-token.service'
 
 const options: CreateAxiosDefaults = {
-	baseURL: `${BASE_URL}/api`,
+	baseURL: `${process.env.NEXT_PUBLIC_SERVER_API_URL}/api`,
 	headers: {
 		'Content-Type': 'application/json',
 	},

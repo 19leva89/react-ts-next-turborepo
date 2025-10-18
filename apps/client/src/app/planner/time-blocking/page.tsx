@@ -13,6 +13,7 @@ const TimeBlockingPage = () => {
 	return (
 		<div>
 			<Heading title='Time blocking' />
+
 			<TimeBlocking />
 		</div>
 	)

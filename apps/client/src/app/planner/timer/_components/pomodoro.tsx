@@ -23,13 +23,27 @@ export const Pomodoro = () => {
 		timerState.setSecondsLeft(workInterval * 60),
 	)
 
-	return (
-		<div className='relative w-80 text-center'>
-			{!isLoading && <div className='text-7xl font-semibold'>{formatTime(timerState.secondsLeft)}</div>}
+	const handleResetSession = () => {
+		timerState.setIsRunning(false)
 
-			{isLoading ? (
-				<LoaderIcon />
-			) : sessionsResponse?.data ? (
+		deleteSession(sessionsResponse!.data.id)
+	}
+
+	const handlePlayPause = () => {
+		if (timerState.isRunning) {
+			actions.pauseHandler()
+		} else {
+			actions.playHandler()
+		}
+	}
+
+	const renderTimerControls = () => {
+		if (isLoading) {
+			return <LoaderIcon />
+		}
+
+		if (sessionsResponse?.data) {
+			return (
 				<>
 					<PomodoroRounds
 						rounds={rounds}
@@ -38,30 +52,41 @@ export const Pomodoro = () => {
 						activeRound={timerState.activeRound}
 					/>
 
-					<button
+					<Button
+						variant='ghost'
+						size='icon-lg'
 						disabled={actions.isUpdateRoundPending}
-						onClick={timerState.isRunning ? actions.pauseHandler : actions.playHandler}
-						className='mt-6 cursor-pointer opacity-80 transition-opacity duration-300 ease-in-out hover:opacity-100'
+						onClick={handlePlayPause}
+						className='opacity-80 transition-opacity duration-300 ease-in-out hover:opacity-100'
 					>
-						{timerState.isRunning ? <PauseIcon size={30} /> : <PlayIcon size={30} />}
-					</button>
+						{timerState.isRunning ? <PauseIcon className='size-6' /> : <PlayIcon className='size-6' />}
+					</Button>
 
-					<button
+					<Button
+						variant='ghost'
+						size='icon-lg'
 						disabled={isDeletePending}
-						onClick={() => {
-							timerState.setIsRunning(false)
-							deleteSession(sessionsResponse.data.id)
-						}}
-						className='absolute right-0 top-0 cursor-pointer opacity-40 transition-opacity duration-300 ease-in-out hover:opacity-90'
+						onClick={handleResetSession}
+						className='absolute right-0 top-0 opacity-40 transition-opacity duration-300 ease-in-out hover:opacity-90'
 					>
-						<RefreshCcwIcon size={19} />
-					</button>
+						<RefreshCcwIcon className='size-5' />
+					</Button>
 				</>
-			) : (
-				<Button onClick={() => mutate()} className='mt-1' disabled={isPending}>
-					Create session
-				</Button>
-			)}
+			)
+		}
+
+		return (
+			<Button onClick={() => mutate()} disabled={isPending}>
+				Create session
+			</Button>
+		)
+	}
+
+	return (
+		<div className='relative mx-2 flex w-80 flex-col items-center gap-4'>
+			{!isLoading && <div className='text-7xl font-semibold'>{formatTime(timerState.secondsLeft)}</div>}
+
+			{renderTimerControls()}
 		</div>
 	)
 }

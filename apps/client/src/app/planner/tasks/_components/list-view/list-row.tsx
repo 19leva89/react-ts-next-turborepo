@@ -1,14 +1,13 @@
 import { cn } from '@repo/ui/lib'
-import type { Dispatch, SetStateAction } from 'react'
+import { Input } from '@repo/ui/components'
 import { Controller, useForm } from 'react-hook-form'
+import type { Dispatch, SetStateAction } from 'react'
 import { GripVerticalIcon, LoaderIcon, TrashIcon } from 'lucide-react'
 
-import { Input } from '@repo/ui/components'
-import { Checkbox } from '@/components/checkbox'
+import { DatePicker } from '@/components/date-picker'
+import { Checkbox, SingleSelect } from '@/components'
 import { useDeleteTask } from '../../_hooks/useDeleteTask'
 import { useTaskDebounce } from '../../_hooks/useTaskDebounce'
-import { DatePicker } from '@/components/date-picker'
-import { SingleSelect } from '@/components/single-select'
 import type { ITaskResponse, TypeTaskFormState } from '@/types/task.types'
 
 interface IListRow {
@@ -41,7 +40,7 @@ export const ListRow = ({ item, setItems }: IListRow) => {
 			<div className='inline-flex w-full items-center justify-center gap-2.5'>
 				<button
 					aria-describedby='todo-item'
-					className='cursor-pointer opacity-50 transition-opacity duration-300 ease-in-out hover:opacity-100'
+					className='opacity-50 transition-opacity duration-300 ease-in-out hover:opacity-100'
 				>
 					<GripVerticalIcon />
 				</button>
@@ -87,7 +86,7 @@ export const ListRow = ({ item, setItems }: IListRow) => {
 
 			<button
 				onClick={() => (item.id ? deleteTask(item.id) : setItems((prev) => prev?.slice(0, -1)))}
-				className='flex cursor-pointer items-center justify-center opacity-50 transition-opacity duration-300 ease-in-out hover:opacity-100'
+				className='flex items-center justify-center opacity-50 transition-opacity duration-300 ease-in-out hover:opacity-100'
 			>
 				{isDeletePending ? <LoaderIcon size={15} /> : <TrashIcon size={15} />}
 			</button>

@@ -8,8 +8,8 @@ import { useMutation } from '@tanstack/react-query'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FormProvider, Resolver, SubmitHandler, useForm } from 'react-hook-form'
 
-import { FormInput } from '@/components/forms'
 import { Heading } from '@/components/heading'
+import { FormInput } from '@/components/forms'
 import { authService } from '@/services/auth.service'
 import { DASHBOARD_PAGES } from '@/config/pages-url.config'
 import { AxiosServerError, ServerError } from '@/types/auth.types'
@@ -81,7 +81,7 @@ export const Auth = () => {
 					className='bg-sidebar m-2 w-full rounded-xl p-4 shadow-sm sm:w-2/3 md:w-1/2 lg:w-1/3 xl:w-1/4'
 				>
 					<div className='flex grow flex-col items-stretch justify-between gap-2 py-3 md:gap-4 md:py-6'>
-						<Heading title='Auth' />
+						<Heading title='Auth' hiddenProfile />
 
 						<FormInput name='email' type='email' placeholder='Email' required />
 

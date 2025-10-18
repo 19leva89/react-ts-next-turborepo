@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
-import { Settings } from './_components/settings'
 import { Heading } from '@/components/heading'
+import { Settings } from './_components/settings'
 import { NO_INDEX_PAGE } from '@/constants/seo.constants'
 
 export const metadata: Metadata = {

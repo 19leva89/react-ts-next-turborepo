@@ -5,8 +5,8 @@ import { Button } from '@repo/ui/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FormProvider, Resolver, SubmitHandler, useForm } from 'react-hook-form'
 
+import { useProfile } from '@/hooks'
 import { FormInput } from '@/components/forms'
-import { useProfile } from '@/hooks/use-profile'
 import { useUpdateSettings } from '../_hooks/use-update-settings'
 import { TUserValues, UserSchema } from '@/components/forms/schemas'
 

@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { UseFormReset } from 'react-hook-form'
 
-import { useProfile } from '@/hooks/use-profile'
+import { useProfile } from '@/hooks'
 import { TypeUserForm } from '@/types/auth.types'
 
 export function useInitialData(reset: UseFormReset<TypeUserForm>) {
@@ -17,5 +17,5 @@ export function useInitialData(reset: UseFormReset<TypeUserForm>) {
 				intervalsCount: data.user.intervalsCount,
 			})
 		}
-	}, [isSuccess])
+	}, [isSuccess, data, reset])
 }

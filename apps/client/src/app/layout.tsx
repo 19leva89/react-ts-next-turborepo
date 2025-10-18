@@ -4,7 +4,7 @@ import { Noto_Sans } from 'next/font/google'
 import { Toaster } from '@repo/ui/components'
 
 import { SITE_NAME } from '@/constants/seo.constants'
-import { QueryProvider } from '@/components/providers/query-provider'
+import { QueryProvider } from '@/components/providers'
 
 import '@repo/ui/globals.css'
 

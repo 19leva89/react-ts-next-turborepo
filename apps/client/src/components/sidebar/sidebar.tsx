@@ -3,16 +3,14 @@
 import Link from 'next/link'
 import { SquareChartGanttIcon } from 'lucide-react'
 
-import { MENU } from './menu.data'
-import { MenuItem } from './menu-item'
-import { LogoutButton } from './logout-button'
 import { COLORS } from '@/constants/color.constants'
+import { MENU, MenuItem } from '@/components/sidebar'
 
 export const Sidebar = () => {
 	return (
-		<aside className='border-r-border bg-sidebar flex h-full flex-col justify-between border-r'>
-			<div>
-				<Link href='/' className='border-b-border flex items-center gap-2.5 border-b'>
+		<aside className='border-r-border bg-sidebar flex h-full flex-col justify-between border-r py-2'>
+			<div className='flex flex-col gap-2'>
+				<Link href='/' className='mx-2 flex items-center gap-2.5'>
 					<SquareChartGanttIcon color={COLORS.primary} size={38} />
 
 					<span className='relative text-2xl font-bold'>
@@ -21,14 +19,10 @@ export const Sidebar = () => {
 					</span>
 				</Link>
 
-				<div className='relative mt-2 px-1.5 py-3'>
-					<LogoutButton />
-
-					<div className='[&>:first-child]:mt-4'>
-						{MENU.map((item) => (
-							<MenuItem item={item} key={item.link} />
-						))}
-					</div>
+				<div className='px-1.5 py-3'>
+					{MENU.map((item) => (
+						<MenuItem item={item} key={item.link} />
+					))}
 				</div>
 			</div>
 
@@ -37,7 +31,7 @@ export const Sidebar = () => {
 				<a
 					href='https://www.linkedin.com/in/lev-dmitry'
 					target='_blank'
-					rel='noreferrer'
+					rel='noreferrer noopener'
 					className='hover:text-primary text-brand-300 transition-colors'
 				>
 					SobolevDev

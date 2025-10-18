@@ -1,11 +1,10 @@
 import debounce from 'lodash.debounce'
-import { useCallback, useEffect } from 'react'
 import { UseFormWatch } from 'react-hook-form'
-
-import { TypeTaskFormState } from '@/types/task.types'
+import { useCallback, useEffect, useMemo } from 'react'
 
 import { useCreateTask } from './useCreateTask'
 import { useUpdateTask } from './useUpdateTask'
+import { TypeTaskFormState } from '@/types/task.types'
 
 interface IUseTaskDebounce {
 	watch: UseFormWatch<TypeTaskFormState>
@@ -16,19 +15,30 @@ export function useTaskDebounce({ watch, itemId }: IUseTaskDebounce) {
 	const { createTask } = useCreateTask()
 	const { updateTask } = useUpdateTask()
 
-	const debouncedCreateTask = useCallback(
-		debounce((formData: TypeTaskFormState) => {
+	// Extract inner callbacks with explicit deps
+	const createTaskFn = useCallback(
+		(formData: TypeTaskFormState) => {
 			createTask(formData)
-		}, 444),
-		[],
+		},
+		[createTask],
 	)
 
-	// Тепер debouncedUpdateTask буде зберігатися між рендерами, і debounce буде працювати як очікується.
-	const debouncedUpdateTask = useCallback(
-		debounce((formData: TypeTaskFormState) => {
+	const updateTaskFn = useCallback(
+		(formData: TypeTaskFormState) => {
 			updateTask({ id: itemId, data: formData })
-		}, 444),
-		[],
+		},
+		[updateTask, itemId], // Track both deps
+	)
+
+	// Memoize the debounced versions
+	const debouncedCreateTask = useMemo(
+		() => debounce(createTaskFn, 444),
+		[createTaskFn], // Only recreate if inner fn changes
+	)
+
+	const debouncedUpdateTask = useMemo(
+		() => debounce(updateTaskFn, 444),
+		[updateTaskFn], // Only recreate if inner fn changes
 	)
 
 	useEffect(() => {
@@ -46,5 +56,5 @@ export function useTaskDebounce({ watch, itemId }: IUseTaskDebounce) {
 		return () => {
 			unsubscribe()
 		}
-	}, [watch(), debouncedUpdateTask, debouncedCreateTask])
+	}, [watch, debouncedUpdateTask, debouncedCreateTask, itemId])
 }

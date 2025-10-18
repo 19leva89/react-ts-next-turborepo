@@ -1,4 +1,5 @@
 import { cn } from '@repo/ui/lib'
+import { Button } from '@repo/ui/components'
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
 
 import { IPomodoroRoundResponse } from '@/types/pomodoro.types'
@@ -21,15 +22,17 @@ export const PomodoroRounds = ({
 
 	return (
 		<div className='flex items-center justify-center gap-2'>
-			<button
+			<Button
+				variant='ghost'
+				size='icon-lg'
 				disabled={!isCanPrevRound}
 				onClick={() => (isCanPrevRound ? prevRoundHandler() : false)}
-				className='mt-1 cursor-pointer opacity-20 transition-opacity duration-300 ease-in-out hover:opacity-100 disabled:opacity-20'
+				className='opacity-20 transition-opacity duration-300 ease-in-out hover:opacity-100 disabled:opacity-20'
 			>
-				<ChevronLeftIcon size={23} />
-			</button>
+				<ChevronLeftIcon className='size-6' />
+			</Button>
 
-			<div className='mt-1 flex items-center justify-center gap-3'>
+			<div className='flex items-center justify-center gap-3'>
 				{rounds &&
 					rounds.map((round, index) => (
 						<div
@@ -46,13 +49,15 @@ export const PomodoroRounds = ({
 					))}
 			</div>
 
-			<button
+			<Button
+				variant='ghost'
+				size='icon-lg'
 				disabled={!isCanNextRound}
 				onClick={() => (isCanNextRound ? nextRoundHandler() : false)}
-				className='mt-1 cursor-pointer opacity-20 transition-opacity duration-300 ease-in-out hover:opacity-100 disabled:opacity-20'
+				className='opacity-20 transition-opacity duration-300 ease-in-out hover:opacity-100 disabled:opacity-20'
 			>
-				<ChevronRightIcon size={23} />
-			</button>
+				<ChevronRightIcon className='size-6' />
+			</Button>
 		</div>
 	)
 }

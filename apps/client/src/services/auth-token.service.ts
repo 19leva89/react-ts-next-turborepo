@@ -1,8 +1,7 @@
 import Cookies from 'js-cookie'
 
 // Cookie on Client side
-const COOKIE_DOMAIN =
-	process.env.NODE_ENV === 'production' ? 'react-ts-next-red-planner-trello.onrender.com' : 'localhost'
+const COOKIE_DOMAIN = process.env.NEXT_PUBLIC_SERVER_API_URL
 
 export enum EnumTokens {
 	'ACCESS_TOKEN' = 'accessToken',

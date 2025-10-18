@@ -1,8 +1,8 @@
 import { cn } from '@repo/ui/lib'
 import { XIcon } from 'lucide-react'
 
-import { Badge } from '@/components/badge'
-import { useOutside } from '@/hooks/use-outside'
+import { Badge } from '@/components'
+import { useOutside } from '@/hooks'
 
 export interface IOption {
 	label: string
@@ -28,7 +28,6 @@ export function SingleSelect({ data, onChange, value, isColorSelect }: ISingleSe
 					e.preventDefault()
 					setIsShow(!isShow)
 				}}
-				className='cursor-pointer'
 			>
 				{getValue() ? (
 					<Badge
@@ -49,7 +48,7 @@ export function SingleSelect({ data, onChange, value, isColorSelect }: ISingleSe
 						e.preventDefault()
 						onChange('')
 					}}
-					className='absolute -right-4 -top-2 cursor-pointer opacity-30 transition-opacity duration-300 ease-in-out hover:opacity-100'
+					className='absolute -right-4 -top-2 opacity-30 transition-opacity duration-300 ease-in-out hover:opacity-100'
 				>
 					<XIcon size={14} />
 				</button>
@@ -77,7 +76,7 @@ export function SingleSelect({ data, onChange, value, isColorSelect }: ISingleSe
 										}
 									: {}
 							}
-							className='mb-4 block cursor-pointer rounded-lg capitalize last:mb-0'
+							className='mb-4 block rounded-lg capitalize last:mb-0'
 						>
 							<Badge variant={item.value}>{item.label}</Badge>
 						</button>

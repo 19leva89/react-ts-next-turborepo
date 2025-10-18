@@ -7,8 +7,8 @@ import LocalizedFormat from 'dayjs/plugin/localizedFormat'
 
 import 'react-day-picker/dist/style.css'
 
-import { useOutside } from '@/hooks/use-outside'
-import { formatCaption } from './date-picker-caption'
+import { useOutside } from '@/hooks'
+import { formatCaption } from '@/components/date-picker'
 
 dayjs.extend(LocalizedFormat)
 
@@ -42,7 +42,7 @@ export function DatePicker({ onChange, value, position = 'right' }: IDatePicker)
 			{value && (
 				<button
 					onClick={() => onChange('')}
-					className='absolute -right-4 -top-2 cursor-pointer opacity-30 transition-opacity duration-300 ease-in-out hover:opacity-100'
+					className='absolute -right-4 -top-2 opacity-30 transition-opacity duration-300 ease-in-out hover:opacity-100'
 				>
 					<XIcon size={14} />
 				</button>

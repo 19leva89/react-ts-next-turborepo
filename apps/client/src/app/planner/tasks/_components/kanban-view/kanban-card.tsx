@@ -4,11 +4,10 @@ import { Controller, useForm } from 'react-hook-form'
 import type { Dispatch, SetStateAction } from 'react'
 import { GripVerticalIcon, LoaderIcon, TrashIcon } from 'lucide-react'
 
-import { Checkbox } from '@/components/checkbox'
+import { DatePicker } from '@/components/date-picker'
+import { Checkbox, SingleSelect } from '@/components'
 import { useDeleteTask } from '../../_hooks/useDeleteTask'
 import { useTaskDebounce } from '../../_hooks/useTaskDebounce'
-import { DatePicker } from '@/components/date-picker'
-import { SingleSelect } from '@/components/single-select'
 import type { ITaskResponse, TypeTaskFormState } from '@/types/task.types'
 
 interface IKanbanCard {
@@ -40,7 +39,7 @@ export const KanbanCard = ({ item, setItems }: IKanbanCard) => {
 			<div className='mb-2 flex items-center text-[93%] [&>input:last-child]:ml-2'>
 				<button
 					aria-describedby='todo-item'
-					className='-ml-1 -mr-0.5 cursor-pointer opacity-20 transition-opacity duration-300 ease-in-out hover:opacity-100'
+					className='-ml-1 -mr-0.5 opacity-20 transition-opacity duration-300 ease-in-out hover:opacity-100'
 				>
 					<GripVerticalIcon className='absolute right-1.5 top-2 size-4' />
 				</button>
@@ -87,7 +86,7 @@ export const KanbanCard = ({ item, setItems }: IKanbanCard) => {
 			<div className='absolute bottom-1 right-1.5 opacity-40 transition-opacity hover:opacity-100'>
 				<button
 					onClick={() => (item.id ? deleteTask(item.id) : setItems((prev) => prev?.slice(0, -1)))}
-					className='cursor-pointer opacity-50 transition-opacity duration-300 ease-in-out hover:opacity-100'
+					className='opacity-50 transition-opacity duration-300 ease-in-out hover:opacity-100'
 				>
 					{isDeletePending ? <LoaderIcon size={15} /> : <TrashIcon size={15} />}
 				</button>

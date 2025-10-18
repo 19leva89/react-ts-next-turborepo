@@ -1,4 +1,4 @@
-import { useProfile } from '@/hooks/use-profile'
+import { useProfile } from '@/hooks'
 
 export function useLoadSettings() {
 	const { data } = useProfile()

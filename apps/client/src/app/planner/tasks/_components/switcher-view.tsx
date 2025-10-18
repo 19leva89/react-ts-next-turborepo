@@ -1,6 +1,7 @@
 'use client'
 
 import { cn } from '@repo/ui/lib'
+import { Button } from '@repo/ui/components'
 import { KanbanIcon, ListTodoIcon } from 'lucide-react'
 
 import type { TypeView } from './tasks-view'
@@ -12,28 +13,32 @@ interface ISwitcherView {
 
 export const SwitcherView = ({ setType, type }: ISwitcherView) => {
 	return (
-		<div className='mb-5 flex items-center gap-4'>
-			<button
+		<div className='mb-5 flex items-center gap-1'>
+			<Button
+				variant='ghost'
+				size='lg'
 				onClick={() => setType('list')}
 				className={cn(
-					'flex cursor-pointer items-center gap-1 transition-opacity duration-300 ease-in-out',
+					'transition-all duration-300 ease-in-out',
 					type === 'kanban' && 'opacity-40 hover:opacity-100',
 				)}
 			>
-				<ListTodoIcon />
+				<ListTodoIcon className='size-5' />
 				List
-			</button>
+			</Button>
 
-			<button
+			<Button
+				variant='ghost'
+				size='lg'
 				onClick={() => setType('kanban')}
 				className={cn(
-					'flex cursor-pointer items-center gap-1 transition-opacity duration-300 ease-in-out',
+					'transition-all duration-300 ease-in-out',
 					type === 'list' && 'opacity-40 hover:opacity-100',
 				)}
 			>
-				<KanbanIcon />
+				<KanbanIcon className='size-5' />
 				Board
-			</button>
+			</Button>
 		</div>
 	)
 }

@@ -25,10 +25,10 @@ export const KanbanAddCardInput = ({ setItems, filterDate }: IKanbanAddCardInput
 	}
 
 	return (
-		<div className="mt-5">
+		<div className='mt-5'>
 			<button
 				onClick={addCard}
-				className="italic opacity-40 text-sm cursor-pointer hover:opacity-60 transition-opacity ease-in-out duration-300"
+				className='text-sm italic opacity-40 transition-opacity duration-300 ease-in-out hover:opacity-60'
 			>
 				Add task...
 			</button>
