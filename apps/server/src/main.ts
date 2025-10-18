@@ -20,7 +20,7 @@ async function bootstrap() {
 	})
 
 	// Port back
-	await app.listen(process.env.SERVER_API_PORT || 8000)
+	await app.listen(process.env.PORT || process.env.SERVER_API_PORT || 8000)
 }
 
 bootstrap()
